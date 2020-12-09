@@ -27,7 +27,9 @@ struct AddProperty: View {
                             NavigationLink(destination: AddTenants(id : item.id)) {
                                 VStack {
                                     Image(systemName: "house.fill").resizable().frame(width: 50, height: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        
+                                    if let counter = item.tentansCounter {
+                                        Text(item.tentansCounter!).font(.caption2).padding(.top,5)
+                                    }
                                     Text(item.propertyName).font(.caption2).padding(.top,5)
                                     Text(item.id).font(.caption2).padding(.top,5)
                                 }
@@ -49,33 +51,32 @@ struct AddProperty: View {
                 .padding()
             }
             .onAppear() {
+                getPropertyName()
                 getProperties()
-                var ref: DatabaseReference!
-                
-                ref = Database.database().reference()
-                let userID = Auth.auth().currentUser?.uid
-                
-                let reference = Database.database().reference().child(userID!).queryOrdered(byChild: "propertyName")
-                reference.queryEqual(toValue: userID!).observeSingleEvent(of: .childAdded) { (snapshot) in
-                     let dictionary = snapshot.value as! [String : Any]
-                     let firstName = dictionary["firstName"]
-                    print(firstName!)
-                }
-                
-                ref.child("PropertyOwners").child("owners").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
-                    // Get user value
-                    let value = snapshot.value as? NSDictionary
-                    let usernameFromDatabase = value?["name"] as? String ?? ""
-//                    print("username------->",username)
-                    username = usernameFromDatabase
-                    
-                    // ...
-                }) { (error) in
-                    print(error.localizedDescription)
-                }
+               
             }
         }
         
+    }
+    
+    
+    func getPropertyName() {
+        var ref: DatabaseReference!
+        
+        ref = Database.database().reference()
+        let userID = Auth.auth().currentUser?.uid
+        
+        ref.child("PropertyOwners").child("owners").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
+            // Get user value
+            let value = snapshot.value as? NSDictionary
+            let usernameFromDatabase = value?["name"] as? String ?? ""
+//                    print("username------->",username)
+            username = usernameFromDatabase
+            
+            // ...
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
     
     
@@ -110,9 +111,15 @@ struct AddProperty: View {
                 let propertyName = value?["propertyName"] as? String ?? ""
 //                child by auto id  below
                 let id = childSnap.key
+                var tentansCounter = ""
+                if let tenants = value?["tenants"] as? [String : AnyObject] {
+                    print("tenants object",tenants.count)
+                    tentansCounter = String(tenants.count)
+                    
+                }
                 print("property name ----->",propertyName)
               
-                tempProperties.append(PropertyModel(id: id, propertyName: propertyName))
+                tempProperties.append(PropertyModel(id: id, propertyName: propertyName, tentansCounter: tentansCounter ))
             }
             properties = tempProperties
             // ...
