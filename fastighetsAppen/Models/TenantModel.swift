@@ -1,0 +1,33 @@
+//
+//  TenantModel.swift
+//  fastighetsAppen
+//
+//  Created by Michele Byman on 2020-12-06.
+//
+
+import Foundation
+import SwiftUI
+import Firebase
+
+struct TenantModel: Identifiable {
+    var id: String
+    var name :  String
+    var lastName : String
+    var email : String
+    
+    func addTenant(tenant : TenantModel) {
+        var ref: DatabaseReference!
+        ref = Database.database().reference()
+        
+        var tenantData = ["name" : tenant.name]
+        tenantData["lastname"] = tenant.lastName
+        tenantData["email"] = tenant.email
+        tenantData["id"] = tenant.id
+        
+        
+        ref.child("PropertyOwners").child("properties/property/tenants").child(id).childByAutoId().setValue(tenantData)
+        
+    }
+    
+    
+}
