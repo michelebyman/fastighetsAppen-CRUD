@@ -12,10 +12,12 @@ struct AddTenants: View {
     @State var name = ""
     @State var lastName = ""
     @State var email = ""
+    
     @State var id : String
     
     var body: some View {
         VStack {
+            
             Text("id from PropertyView \(id)")
             Text("ADD TENANTS").font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/).foregroundColor(/*@START_MENU_TOKEN@*/.blue/*@END_MENU_TOKEN@*/)
             TextField("Tenant name", text: $name)
@@ -34,8 +36,7 @@ struct AddTenants: View {
         
     
         let newTenant = TenantModel(id: id, name: name, lastName: lastName, email: email)
-    
-        newTenant.addTenant(tenant: newTenant)
+        newTenant.addTenant(tenant: newTenant, propertyID: id)
     
     }
 }

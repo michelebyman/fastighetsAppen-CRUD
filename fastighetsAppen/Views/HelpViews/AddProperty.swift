@@ -84,36 +84,14 @@ struct AddProperty: View {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         
-        id = UUID().uuidString
-        let userData = ["id": id, "owner": Auth.auth().currentUser!.uid, "propertyName" : propertyName]
+        let propertyData = ["owner": Auth.auth().currentUser!.uid, "propertyName" : propertyName]
         
-        
-        ref.child("PropertyOwners").child("properties/property").child(Auth.auth().currentUser!.uid).childByAutoId().setValue(userData) { err, result in
-            
-//            DispatchQueue.main.async {
-//                id = result.key!
-//                print("id I need!!!!",id)
-//            }
-           
-            
+        ref.child("PropertyOwners").child("properties").child(Auth.auth().currentUser!.uid).childByAutoId().setValue(propertyData) { err, result in
+//                print("id I need!!!!" \(result.key!))
         }
-        
-        
-        
-        
         getProperties()
         propertyName = ""
     }
-    
-    
-    
-//    func addProperty() {
-//        if propertyName == "" {return}
-//        let saveProperty = PropertyModel(propertyName: propertyName )
-////        saveProperty.saveProperty()
-//        getProperties()
-//        propertyName = ""
-//    }
     
     func getProperties() {
         var ref: DatabaseReference!
@@ -121,7 +99,7 @@ struct AddProperty: View {
         ref = Database.database().reference()
         
         
-        ref.child("PropertyOwners").child("properties/property").child(Auth.auth().currentUser!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
+        ref.child("PropertyOwners").child("properties").child(Auth.auth().currentUser!.uid).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get properties
             
             var tempProperties = [PropertyModel]()
@@ -130,7 +108,8 @@ struct AddProperty: View {
                 let childSnap = child as! DataSnapshot
                 let value = childSnap.value as? NSDictionary
                 let propertyName = value?["propertyName"] as? String ?? ""
-                let id = value?["id"] as? String ?? ""
+//                child by auto id  below
+                let id = childSnap.key
                 print("property name ----->",propertyName)
               
                 tempProperties.append(PropertyModel(id: id, propertyName: propertyName))

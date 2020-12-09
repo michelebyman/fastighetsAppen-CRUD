@@ -12,7 +12,6 @@ import Foundation
 import Firebase
 
 struct PropertyOwner: Identifiable {
-    
     var id = ""
     var ownerId = ""
     var name = ""
@@ -22,8 +21,8 @@ struct PropertyOwner: Identifiable {
         ref = Database.database().reference()
         let currentUser = Auth.auth().currentUser
             
-        print("current user id ----->>>>",currentUser?.uid)
         let userData = ["ownerId" : currentUser?.uid, "name" : name ]
+        
         ref.child("PropertyOwners").child("owners").child(currentUser!.uid).setValue(userData) {
             (error:Error?, ref:DatabaseReference) in
             if let error = error {

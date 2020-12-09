@@ -15,7 +15,9 @@ struct TenantModel: Identifiable {
     var lastName : String
     var email : String
     
-    func addTenant(tenant : TenantModel) {
+    
+    
+    func addTenant(tenant : TenantModel, propertyID: String) {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         
@@ -25,8 +27,8 @@ struct TenantModel: Identifiable {
         tenantData["id"] = tenant.id
         
         
-        ref.child("PropertyOwners").child("properties/property/tenants").child(id).childByAutoId().setValue(tenantData)
-        
+//        ref.child("PropertyOwners").child("properties/property/tenants").child(id).childByAutoId().setValue(tenantData)
+        ref.child("PropertyOwners").child("properties").child(Auth.auth().currentUser!.uid).child(propertyID).child("tenants").childByAutoId().setValue(tenantData)
     }
     
     
