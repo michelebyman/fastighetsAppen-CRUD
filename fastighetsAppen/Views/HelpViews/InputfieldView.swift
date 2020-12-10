@@ -9,34 +9,36 @@ import SwiftUI
 
 struct InputfieldView: View {
     
-    @Binding var inputtext : String
+    @Binding var inputText : String
     
     var imageName : String
-    var placeholderTxt : String
-    var keyType : UIKeyboardType
+    var placeholderText : String
+    var keyboardType : UIKeyboardType
     
     
     var body: some View {
         ZStack(alignment: .leading) {
-            if inputtext.isEmpty {
+            if inputText.isEmpty {
                 HStack {
                     Image(systemName: imageName).foregroundColor(.white)
-                    Text(placeholderTxt)
+                    Text(placeholderText)
                     .foregroundColor(.white )
                     .font(.body)
                     
                 }.padding(.leading)
             }
-            TextField("", text: $inputtext)
+            TextField("", text: $inputText)
                 .frame(minWidth: 0, maxWidth: .infinity)
                 .font(.system(size: 18))
                 .padding()
-                .keyboardType(keyType)
+                .keyboardType(keyboardType)
                 .foregroundColor(.white)
                 .overlay(RoundedRectangle(cornerRadius: 25)
                             .stroke(Color.white,  lineWidth: 2)
                 )
-        }.padding(.top,10)
+        }
+        .padding(.horizontal)
+        
     }
 }
 

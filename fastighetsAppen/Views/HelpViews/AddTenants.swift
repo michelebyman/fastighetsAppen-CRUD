@@ -11,6 +11,8 @@ import MessageUI
 
 
 struct AddTenants: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     @State var name = ""
     @State var lastName = ""
     @State var email = ""
@@ -29,9 +31,6 @@ struct AddTenants: View {
             Color("backgroundColor")
                 .ignoresSafeArea(.all)
             ScrollView {
-                
-                
-               
                 VStack {
                     ScrollView(.horizontal) {
                         HStack {
@@ -63,57 +62,16 @@ struct AddTenants: View {
                         }
                     }
                     .padding()
-                   
+                    
                     Text("Add tenants for \(propertyName) ")
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         .padding()
                     
-                    ZStack(alignment: .leading) {
-                        if name.isEmpty {
-                            HStack {
-                                Image(systemName: "person").foregroundColor(.white)
-                                Text("Name")
-                                .foregroundColor(.white )
-                                .font(.body)
-                                
-                            }.padding(.leading)
-                        }
-                        TextField( "" ,text: $name)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .font(.system(size: 18))
-                            .padding()
-                            .foregroundColor(.white)
-                            .overlay(RoundedRectangle(cornerRadius: 25)
-                                        .stroke(Color.white,  lineWidth: 2)
-                            )
-                    }.padding(.top, 10)
-                    ZStack(alignment: .leading) {
-                        if lastName.isEmpty {
-                            HStack {
-                                Image(systemName: "person").foregroundColor(.white)
-                                Text("Lastname")
-                                .foregroundColor(.white )
-                                .font(.body)
-                                
-                            }.padding(.leading)
-                        }
-                        TextField( "" ,text: $lastName)
-                            .frame(minWidth: 0, maxWidth: .infinity)
-                            .font(.system(size: 18))
-                            .padding()
-                            .foregroundColor(.white)
-                            .overlay(RoundedRectangle(cornerRadius: 25)
-                                        .stroke(Color.white,  lineWidth: 2)
-                            )
-                    }.padding(.top, 10)
+                    InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
+                    InputfieldView(inputText: $lastName, imageName: "person", placeholderText: "Lastname", keyboardType: .default)
+                    InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
+                    InputfieldView(inputText: $phone, imageName: "phone", placeholderText: "Phone", keyboardType: .numberPad)
                     
-                    
-                    InputfieldView(inputtext: $email, imageName: "envelope", placeholderTxt: "Email", keyType: .emailAddress)
-
-                    InputfieldView(inputtext: $phone, imageName: "phone", placeholderTxt: "Phone", keyType: .numberPad)
-
-                   
-                   
                     Button(action: addTenants) {
                         Text("Add tenant")
                             .foregroundColor(Color(.white))
@@ -125,31 +83,30 @@ struct AddTenants: View {
                     
                     
                     
-                     Button(action: sendMessage) {
-                         Text("Send SMS")
-                             .foregroundColor(Color(.white))
-                             .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                     }
-                     .background(Color(.systemPink))
-                     .cornerRadius(25)
-                     .padding(.top, 10)
+                    Button(action: sendMessage) {
+                        Text("Send SMS")
+                            .foregroundColor(Color(.white))
+                            .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    }
+                    .background(Color(.systemPink))
+                    .cornerRadius(25)
+                    .padding(.top, 10)
                     
                 }.padding()
                 .navigationBarItems(
                     trailing:
                         Button(action: {
-                                  self.showingAlert = true
-                              }) {
-                                  Text("Delete property")
-                              }
-                              .alert(isPresented:$showingAlert) {
-                                  Alert(title: Text("Are you sure you want to delete this property and all tenants?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
-                                          deleteProperty()
-                                  }, secondaryButton: .cancel())
-                              }
+                            self.showingAlert = true
+                        }) {
+                            Text("Delete property")
+                        }
+                        .alert(isPresented:$showingAlert) {
+                            Alert(title: Text("Are you sure you want to delete this property and all tenants?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
+                                deleteProperty()
+                            }, secondaryButton: .cancel())
+                        }
                 )
-               
-                  
+                
             }
             .onAppear() {
                 getTenants()
@@ -173,7 +130,7 @@ struct AddTenants: View {
         ref = Database.database().reference()
         ref.child("PropertyOwners").child("properties").child(Auth.auth().currentUser!.uid).child(id).removeValue()
         
-  
+        presentationMode.wrappedValue.dismiss()
     }
     
     func addTenants() {
@@ -194,8 +151,6 @@ struct AddTenants: View {
         ref = Database.database().reference()
         ref.child("PropertyOwners").child("properties").child(Auth.auth().currentUser!.uid).child(id).child("tenants").observeSingleEvent(of: .value, with: { (snapshot) in
             // Get tenants
-            
-            
             var temporaryTenants = [TenantModel]()
             for child in snapshot.children
             {

@@ -28,8 +28,6 @@ class SMSSender : NSObject, MFMessageComposeViewControllerDelegate
     }
     
     func messageComposeViewController(_ controller: MFMessageComposeViewController, didFinishWith result: MessageComposeResult) {
-        
-        print("MESS didFinishWith")
         topMostController().dismiss(animated: true, completion: nil)
     }
     

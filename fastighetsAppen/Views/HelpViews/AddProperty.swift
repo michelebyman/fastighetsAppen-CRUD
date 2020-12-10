@@ -50,26 +50,9 @@ struct AddProperty: View {
                 }
                 .padding()
                 Spacer()
-                ZStack(alignment: .leading) {
-                    if propertyName.isEmpty {
-                        HStack {
-                            Image(systemName: "house").foregroundColor(.white)
-                            Text("Add property name")
-                            .foregroundColor(.white )
-                            .font(.body)
-                            
-                        }.padding(.leading)
-                    }
-                    TextField( "" ,text: $propertyName)
-                        .frame(minWidth: 0, maxWidth: .infinity)
-                        .font(.system(size: 18))
-                        .padding()
-                        .foregroundColor(.white)
-                        .overlay(RoundedRectangle(cornerRadius: 25)
-                                    .stroke(Color.white,  lineWidth: 2)
-                        )
-                }.padding()
                 
+                InputfieldView(inputText: $propertyName, imageName: "house", placeholderText: "Add property name", keyboardType: .default)
+                    
                 Button(action: saveProperty) {
                     Text("Add Property")
                         .foregroundColor(Color(.white))
