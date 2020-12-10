@@ -14,7 +14,8 @@ struct LoginView: View {
     @State var isError = false
     @State var errorMessage = ""
     @State var isLoggedIn = false
-  
+    @State var showPassword = false
+    
     
     var body: some View {
         NavigationView {
@@ -35,12 +36,52 @@ struct LoginView: View {
                             }
                         }
                         .frame(width: 250, height: 250, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/).padding()
-                        TextField("Email", text: $email)
-                            .font(.body)
-                            .padding()
-                        SecureField("Password", text: $password)
-                            .font(.body)
-                            .padding()
+                        InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress).padding(.bottom, 5) 
+                        
+                        ZStack(alignment: .leading) {
+                            if password.isEmpty {
+                                HStack {
+                                    Image(systemName: "lock").foregroundColor(.white)
+                                    Text("Password")
+                                        .foregroundColor(.white )
+                                        .font(.body)
+                                }
+                                .padding(.horizontal)
+                            }
+                            HStack {
+                                if showPassword {
+                                    TextField("", text: $password)
+                                        .frame(minWidth: 0, maxWidth: .infinity)
+                                        .font(.system(size: 18))
+                                        .padding()
+                                        .keyboardType(.default)
+                                    
+                                } else {
+                                    SecureField("", text: $password)
+                                        .frame(minWidth: 0, maxWidth: .infinity)
+                                        .font(.system(size: 18))
+                                        .padding()
+                                        .keyboardType(.default)
+                                }
+                                Spacer()
+                                if !password.isEmpty {
+                                    Button(action: {showPassword.toggle()}) {
+                                        Image(systemName: showPassword ? "eye" : "eye.slash")
+                                            .foregroundColor(.white)
+                                            .padding(.trailing)
+                                    }
+                                }
+                                
+                            }
+                            .foregroundColor(.white)
+                            .overlay(RoundedRectangle(cornerRadius: 25)
+                                        .stroke(Color.white,  lineWidth: 2)
+                            )
+                          
+                            
+                        }
+                        .padding(.horizontal)
+                        
                         if isError { Text("\(errorMessage)") }
                         Button(action: signIn) {
                             Text("Login")
@@ -74,7 +115,7 @@ struct LoginView: View {
                     print("----------------------USer is loggedin-------------",Auth.auth().currentUser)
                     if let user = Auth.auth().currentUser {
                         print("user id --------->",user.uid)
-                       
+                        
                         isLoggedIn = true
                     }
                 }

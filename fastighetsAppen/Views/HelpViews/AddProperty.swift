@@ -20,6 +20,7 @@ struct AddProperty: View {
             Color("backgroundColor")
                 .ignoresSafeArea(.all)
             VStack{
+//                Spacer()
                 Text("Hello \(username)").foregroundColor(Color(.white))
                 ScrollView(.horizontal) {
                     HStack(spacing: 20) {
@@ -52,6 +53,7 @@ struct AddProperty: View {
                 Spacer()
                 
                 InputfieldView(inputText: $propertyName, imageName: "house", placeholderText: "Add property name", keyboardType: .default)
+                    .padding(.horizontal)
                     
                 Button(action: saveProperty) {
                     Text("Add Property")
@@ -62,6 +64,7 @@ struct AddProperty: View {
                 .cornerRadius(25)
                 .padding()
             }
+            
             .onAppear() {
                 getPropertyName()
                 getProperties()
