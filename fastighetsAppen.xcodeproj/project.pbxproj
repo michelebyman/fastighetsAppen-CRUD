@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6AECC15F30291ACF064BDAF0 /* Pods_fastighetsAppen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B457EA97C70246A6FFE0649 /* Pods_fastighetsAppen.framework */; };
+		D13C7C6F25825E0C00F3F756 /* InputfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13C7C6E25825E0C00F3F756 /* InputfieldView.swift */; };
+		D13C7C7225826D1E00F3F756 /* SMSSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13C7C7125826D1E00F3F756 /* SMSSender.swift */; };
 		D14AF99E257E979D00F3C473 /* AddTenants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D14AF99D257E979D00F3C473 /* AddTenants.swift */; };
 		D1A32B4F257D2E0600A705C5 /* PropertyOwnerHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A32B4E257D2E0600A705C5 /* PropertyOwnerHomeView.swift */; };
 		D1A32B5A257D4B0F00A705C5 /* PropertyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A32B59257D4B0F00A705C5 /* PropertyModel.swift */; };
@@ -26,6 +28,8 @@
 /* Begin PBXFileReference section */
 		3B278F984826AEA0BC6FFD10 /* Pods-fastighetsAppen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fastighetsAppen.debug.xcconfig"; path = "Target Support Files/Pods-fastighetsAppen/Pods-fastighetsAppen.debug.xcconfig"; sourceTree = "<group>"; };
 		5B457EA97C70246A6FFE0649 /* Pods_fastighetsAppen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fastighetsAppen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D13C7C6E25825E0C00F3F756 /* InputfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputfieldView.swift; sourceTree = "<group>"; };
+		D13C7C7125826D1E00F3F756 /* SMSSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SMSSender.swift; sourceTree = "<group>"; };
 		D14AF99D257E979D00F3C473 /* AddTenants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTenants.swift; sourceTree = "<group>"; };
 		D1A32B4E257D2E0600A705C5 /* PropertyOwnerHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyOwnerHomeView.swift; sourceTree = "<group>"; };
 		D1A32B59257D4B0F00A705C5 /* PropertyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyModel.swift; sourceTree = "<group>"; };
@@ -76,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				D1A32B5F257D4E2000A705C5 /* AddProperty.swift */,
+				D13C7C6E25825E0C00F3F756 /* InputfieldView.swift */,
 				D14AF99D257E979D00F3C473 /* AddTenants.swift */,
 			);
 			path = HelpViews;
@@ -146,6 +151,7 @@
 		D1F40644257A90A500F26599 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D13C7C7125826D1E00F3F756 /* SMSSender.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -282,7 +288,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D13C7C6F25825E0C00F3F756 /* InputfieldView.swift in Sources */,
 				D1A32B5D257D4CE000A705C5 /* TenantModel.swift in Sources */,
+				D13C7C7225826D1E00F3F756 /* SMSSender.swift in Sources */,
 				D1A32B4F257D2E0600A705C5 /* PropertyOwnerHomeView.swift in Sources */,
 				D1F40614257A4BA000F26599 /* ContentView.swift in Sources */,
 				D1F4064B257A916600F26599 /* SignUpView.swift in Sources */,

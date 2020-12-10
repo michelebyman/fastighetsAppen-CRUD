@@ -14,6 +14,7 @@ struct TenantModel: Identifiable {
     var name :  String
     var lastName : String
     var email : String
+    var phone : String
     
     
     
@@ -24,6 +25,7 @@ struct TenantModel: Identifiable {
         var tenantData = ["name" : tenant.name]
         tenantData["lastname"] = tenant.lastName
         tenantData["email"] = tenant.email
+        tenantData["phone"] = tenant.phone
         tenantData["id"] = tenant.id
         
         
