@@ -20,28 +20,31 @@ struct AddProperty: View {
             Color("backgroundColor")
                 .ignoresSafeArea(.all)
             VStack{
-//                Spacer()
+                //                Spacer()
                 Text("Hello \(username)").foregroundColor(Color(.white))
                 ScrollView(.horizontal) {
                     HStack(spacing: 20) {
                         ForEach(properties) { item in
                             NavigationLink(destination: AddTenants(id : item.id, propertyName: item.propertyName)) {
                                 VStack {
-                                    Image(systemName: "house.fill").resizable().frame(width: 50, height: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                    Image(systemName: "house.fill")
+                                        .resizable()
+                                        .foregroundColor(Color(.white))
+                                        .frame(width: 50, height: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                     Text(item.propertyName).font(.caption).padding(.top,5)
                                     if let counter = item.tentansCounter {
                                         if counter != "" {
-                                        HStack {
-                                            Image(systemName: "person.fill")
-                                                .resizable()
-                                                .frame(width: 10, height: 10)
-                                            Text(item.tentansCounter!).font(.caption2)
-                                        }.padding(.top,5)
+                                            HStack {
+                                                Image(systemName: "person.fill")
+                                                    .resizable()
+                                                    .frame(width: 10, height: 10)
+                                                Text(item.tentansCounter!).font(.caption2)
+                                            }
+                                            .foregroundColor(Color(.white))
+                                            .padding(.top,5)
                                         }
                                     }
-
                                 }
-                               
                             }
                             .frame(maxWidth: .infinity, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 100, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                             .padding()
@@ -54,7 +57,7 @@ struct AddProperty: View {
                 
                 InputfieldView(inputText: $propertyName, imageName: "house", placeholderText: "Add property name", keyboardType: .default)
                     .padding(.horizontal)
-                    
+
                 Button(action: saveProperty) {
                     Text("Add Property")
                         .foregroundColor(Color(.white))
@@ -64,11 +67,12 @@ struct AddProperty: View {
                 .cornerRadius(25)
                 .padding()
             }
+            .padding(.bottom, 30)
             
             .onAppear() {
                 getPropertyName()
                 getProperties()
-               
+
             }
         }
         
@@ -85,7 +89,7 @@ struct AddProperty: View {
             // Get user value
             let value = snapshot.value as? NSDictionary
             let usernameFromDatabase = value?["name"] as? String ?? ""
-//                    print("username------->",username)
+            //                    print("username------->",username)
             username = usernameFromDatabase
             
             // ...
@@ -103,7 +107,7 @@ struct AddProperty: View {
         let propertyData = ["owner": Auth.auth().currentUser!.uid, "propertyName" : propertyName]
         
         ref.child("PropertyOwners").child("properties").child(Auth.auth().currentUser!.uid).childByAutoId().setValue(propertyData) { err, result in
-//                print("id I need!!!!" \(result.key!))
+            //                print("id I need!!!!" \(result.key!))
         }
         getProperties()
         propertyName = ""
@@ -120,7 +124,7 @@ struct AddProperty: View {
                 let childSnap = child as! DataSnapshot
                 let value = childSnap.value as? NSDictionary
                 let propertyName = value?["propertyName"] as? String ?? ""
-//                child by auto id  below
+                //                child by auto id  below
                 let id = childSnap.key
                 var tentansCounter = ""
                 if let tenants = value?["tenants"] as? [String : AnyObject] {
@@ -130,7 +134,7 @@ struct AddProperty: View {
                     
                 }
                 print("property name ----->",propertyName)
-              
+
                 tempProperties.append(PropertyModel(id: id, propertyName: propertyName, tentansCounter: tentansCounter ))
             }
             properties = tempProperties

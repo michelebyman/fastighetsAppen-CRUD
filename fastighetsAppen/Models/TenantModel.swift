@@ -12,7 +12,7 @@ import Firebase
 struct TenantModel: Identifiable {
     var id: String
     var name :  String
-    var lastName : String
+    var lastname : String
     var email : String
     var phone : String
     
@@ -23,7 +23,7 @@ struct TenantModel: Identifiable {
         ref = Database.database().reference()
         
         var tenantData = ["name" : tenant.name]
-        tenantData["lastname"] = tenant.lastName
+        tenantData["lastname"] = tenant.lastname
         tenantData["email"] = tenant.email
         tenantData["phone"] = tenant.phone
         tenantData["id"] = tenant.id

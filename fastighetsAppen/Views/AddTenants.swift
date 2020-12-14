@@ -14,7 +14,7 @@ struct AddTenants: View {
     @Environment(\.presentationMode) var presentationMode
     
     @State var name = ""
-    @State var lastName = ""
+    @State var lastname = ""
     @State var email = ""
     @State var phone = ""
     @State var tenants = [TenantModel]()
@@ -35,12 +35,14 @@ struct AddTenants: View {
                     ScrollView(.horizontal) {
                         HStack {
                             ForEach(tenants) { tenant in
-                                NavigationLink(destination: Text(tenant.name)) {
+                                NavigationLink(destination: TenantDetailView(tenant: TenantModel(id: tenant.id, name: tenant.name, lastname: tenant.lastname, email: tenant.email, phone: tenant.phone), propertyID: id)) {
                                     VStack {
-                                        Image(systemName: "person.fill").resizable().frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                        Image(systemName: "person.fill")
+                                            .resizable().frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            .foregroundColor(Color(.white))
                                         
                                         HStack {
-                                            Text("\(tenant.name)\(tenant.lastName)")
+                                            Text("\(tenant.name) \(tenant.lastname)")
                                                 .font(.caption)
                                         }.padding(.top,5)
                                         Text(tenant.email)
@@ -62,13 +64,22 @@ struct AddTenants: View {
                         }
                     }
                     .padding()
+
+                    Button(action: sendMessage) {
+                        Text("Send SMS")
+                            .foregroundColor(Color(.white))
+                            .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    }
+                    .background(Color(.systemPink))
+                    .cornerRadius(25)
+                    .padding(.top, 10)
                     
                     Text("Add tenants for \(propertyName) ")
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         .padding()
                     
                     InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
-                    InputfieldView(inputText: $lastName, imageName: "person", placeholderText: "Lastname", keyboardType: .default)
+                    InputfieldView(inputText: $lastname, imageName: "person", placeholderText: "lastname", keyboardType: .default)
                     InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
                     InputfieldView(inputText: $phone, imageName: "phone", placeholderText: "Phone", keyboardType: .numberPad)
                     
@@ -83,14 +94,7 @@ struct AddTenants: View {
                     
                     
                     
-                    Button(action: sendMessage) {
-                        Text("Send SMS")
-                            .foregroundColor(Color(.white))
-                            .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    }
-                    .background(Color(.systemPink))
-                    .cornerRadius(25)
-                    .padding(.top, 10)
+
                     
                 }.padding()
                 .navigationBarItems(
@@ -106,8 +110,9 @@ struct AddTenants: View {
                             }, secondaryButton: .cancel())
                         }
                 )
-                
+                .padding(.bottom, 30)
             }
+
             .onAppear() {
                 getTenants()
             }
@@ -135,12 +140,12 @@ struct AddTenants: View {
     
     func addTenants() {
         print("PHONE IS \(phone)")
-        if name == "" || lastName == "" || email == "" || phone == "" {return}
-        let newTenant = TenantModel(id: id, name: name, lastName: lastName, email: email, phone: phone)
+        if name == "" || lastname == "" || email == "" || phone == "" {return}
+        let newTenant = TenantModel(id: id, name: name, lastname: lastname, email: email, phone: phone)
         newTenant.addTenant(tenant: newTenant, propertyID: id)
         name = ""
         phone = ""
-        lastName = ""
+        lastname = ""
         email = ""
         getTenants()
         
@@ -157,17 +162,13 @@ struct AddTenants: View {
                 let childSnap = child as! DataSnapshot
                 let value = childSnap.value as? NSDictionary
                 let tenantName = value?["name"] as? String ?? ""
-                let tenantLastname = value?["lastname"] as? String ?? ""
+                let tenantlastname = value?["lastname"] as? String ?? ""
                 let tenantEmail = value?["email"] as? String ?? ""
                 let tenantPhone = value?["phone"] as? String ?? ""
                 //                child by auto id  below
                 let id = childSnap.key
-                
-                print("tenant name ----->",tenantName)
-                print("tenant lastname ----->",tenantLastname)
-                print("tenant email ----->",tenantEmail)
-                
-                temporaryTenants.append(TenantModel(id: id, name: tenantName, lastName: tenantLastname, email: tenantEmail, phone: tenantPhone))
+
+                temporaryTenants.append(TenantModel(id: id, name: tenantName, lastname: tenantlastname, email: tenantEmail, phone: tenantPhone))
             }
             tenants = temporaryTenants
             tenants.reverse()
