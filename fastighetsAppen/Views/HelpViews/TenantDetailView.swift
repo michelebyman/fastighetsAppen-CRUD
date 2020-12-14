@@ -31,7 +31,7 @@ struct TenantDetailView: View {
                 .ignoresSafeArea(.all)
             ScrollView {
                 VStack {
-                    VStack {
+                    ZStack {
                         HStack {
                             Spacer()
                             if !isEditMode {
@@ -50,22 +50,25 @@ struct TenantDetailView: View {
                             }
 
                             }
-                        }
-                        Image(systemName: "person.fill").resizable().frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-
-                        HStack {
-                            Text("\(name) \(lastname)")
+                        }.offset(y: -50)
+                        VStack {
+                            Image(systemName: "person.fill").resizable().frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            HStack {
+                                Text("\(name) \(lastname)")
+                                    .font(.caption)
+                            }.padding(.top,5)
+                            Text(email)
                                 .font(.caption)
-                        }.padding(.top,5)
-                        Text(email)
-                            .font(.caption)
-                            .foregroundColor(Color(.white))
-                            .padding(.top,5)
-                        Text(phone)
-                            .font(.caption)
-                            .foregroundColor(Color(.white))
-                            .padding(.top,5)
-                            .padding(.bottom,5)
+                                .foregroundColor(Color(.white))
+                                .padding(.top,5)
+                            Text(phone)
+                                .font(.caption)
+                                .foregroundColor(Color(.white))
+                                .padding(.top,5)
+                                .padding(.bottom,5)
+                        }
+
+
 
                     }
                     .frame(maxWidth: .infinity, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)

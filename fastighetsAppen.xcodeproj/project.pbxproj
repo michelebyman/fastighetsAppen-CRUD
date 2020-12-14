@@ -18,7 +18,6 @@
 		D1A32B5D257D4CE000A705C5 /* TenantModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A32B5C257D4CE000A705C5 /* TenantModel.swift */; };
 		D1A32B60257D4E2000A705C5 /* AddProperty.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1A32B5F257D4E2000A705C5 /* AddProperty.swift */; };
 		D1F40612257A4BA000F26599 /* fastighetsAppenApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F40611257A4BA000F26599 /* fastighetsAppenApp.swift */; };
-		D1F40614257A4BA000F26599 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F40613257A4BA000F26599 /* ContentView.swift */; };
 		D1F40616257A4BA400F26599 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1F40615257A4BA400F26599 /* Assets.xcassets */; };
 		D1F40619257A4BA400F26599 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D1F40618257A4BA400F26599 /* Preview Assets.xcassets */; };
 		D1F40622257A8D4F00F26599 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D1F40621257A8D4F00F26599 /* GoogleService-Info.plist */; };
@@ -41,7 +40,6 @@
 		D1A32B5F257D4E2000A705C5 /* AddProperty.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProperty.swift; sourceTree = "<group>"; };
 		D1F4060E257A4BA000F26599 /* fastighetsAppen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = fastighetsAppen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1F40611257A4BA000F26599 /* fastighetsAppenApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fastighetsAppenApp.swift; sourceTree = "<group>"; };
-		D1F40613257A4BA000F26599 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		D1F40615257A4BA400F26599 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D1F40618257A4BA400F26599 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		D1F4061A257A4BA400F26599 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -115,7 +113,6 @@
 				D1F40643257A909A00F26599 /* Models */,
 				D1F40642257A908700F26599 /* Views */,
 				D1F40611257A4BA000F26599 /* fastighetsAppenApp.swift */,
-				D1F40613257A4BA000F26599 /* ContentView.swift */,
 				D1F40615257A4BA400F26599 /* Assets.xcassets */,
 				D1F4061A257A4BA400F26599 /* Info.plist */,
 				D1F40621257A8D4F00F26599 /* GoogleService-Info.plist */,
@@ -299,7 +296,6 @@
 				D1A32B5D257D4CE000A705C5 /* TenantModel.swift in Sources */,
 				D13C7C7225826D1E00F3F756 /* SMSSender.swift in Sources */,
 				D1A32B4F257D2E0600A705C5 /* PropertyOwnerHomeView.swift in Sources */,
-				D1F40614257A4BA000F26599 /* ContentView.swift in Sources */,
 				D1F4064B257A916600F26599 /* SignUpView.swift in Sources */,
 				D1A32B5A257D4B0F00A705C5 /* PropertyModel.swift in Sources */,
 				D1F40654257AC00400F26599 /* PropertyOwner.swift in Sources */,

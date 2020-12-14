@@ -36,7 +36,7 @@ struct LoginView: View {
                             }
                         }
                         .frame(width: 250, height: 250, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/).padding()
-                        InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress).padding(.bottom, 5) 
+                        InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
                         
                         ZStack(alignment: .leading) {
                             if password.isEmpty {
@@ -82,7 +82,7 @@ struct LoginView: View {
                         }
                         .padding(.horizontal)
                         
-                        if isError { Text("\(errorMessage)") }
+                        if isError { Text("\(errorMessage)").padding() }
                         Button(action: signIn) {
                             Text("Login")
                                 .foregroundColor(Color(.white))
@@ -90,6 +90,7 @@ struct LoginView: View {
                         }
                         .background(Color(.systemPink))
                         .cornerRadius(25)
+                        .padding(.top, 10)
                         .padding()
                         .navigationBarItems(trailing: NavigationLink(
                                                 destination: SignUpView(),
@@ -107,6 +108,7 @@ struct LoginView: View {
                 
             }
             .onAppear() {
+                isError = false
                 if (Auth.auth().currentUser == nil) {
                     print("----------------------USer is not loggedin",Auth.auth().currentUser)
                     isLoggedIn = false

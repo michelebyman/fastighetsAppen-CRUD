@@ -14,6 +14,8 @@ struct AddProperty: View {
     @State var propertyName = ""
     @State var properties = [PropertyModel]()
     @State var id = ""
+    @State var isError = false
+
     
     var body: some View {
         ZStack {
@@ -21,7 +23,10 @@ struct AddProperty: View {
                 .ignoresSafeArea(.all)
             VStack{
                 //                Spacer()
-                Text("Hello \(username)").foregroundColor(Color(.white))
+                Text("Welcome!")
+                    .foregroundColor(Color(.white))
+                    .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                    .padding(.bottom)
                 ScrollView(.horizontal) {
                     HStack(spacing: 20) {
                         ForEach(properties) { item in
@@ -57,6 +62,15 @@ struct AddProperty: View {
                 
                 InputfieldView(inputText: $propertyName, imageName: "house", placeholderText: "Add property name", keyboardType: .default)
                     .padding(.horizontal)
+                    .onChange(of: propertyName, perform: { value in
+                        if !value.isEmpty {
+                            isError = false
+                        } 
+                    })
+
+                if isError {
+                    Text("You have to add a property name")
+                }
 
                 Button(action: saveProperty) {
                     Text("Add Property")
@@ -100,7 +114,8 @@ struct AddProperty: View {
     
     
     func saveProperty() {
-        if propertyName == "" {return}
+
+        if propertyName == "" {isError = true; return}
         var ref: DatabaseReference!
         ref = Database.database().reference()
         
@@ -111,6 +126,7 @@ struct AddProperty: View {
         }
         getProperties()
         propertyName = ""
+        isError = false
     }
     
     func getProperties() {

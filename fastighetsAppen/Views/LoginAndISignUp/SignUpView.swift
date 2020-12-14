@@ -38,8 +38,8 @@ struct SignUpView: View {
                     }
                     .frame(width: 250, height: 250, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     .padding()
-                    InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default).padding(.bottom, 5)
-                    InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress).padding(.bottom, 5)
+                    InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
+                    InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
                     
                     ZStack(alignment: .leading) {
                         if password.isEmpty {
@@ -91,6 +91,7 @@ struct SignUpView: View {
                     }
                     .background(Color(.systemPink))
                     .cornerRadius(25)
+                    .padding(.top, 10)
                     .padding()
                     Spacer()
                 }.fullScreenCover(isPresented: $isLoggedIn, content: {

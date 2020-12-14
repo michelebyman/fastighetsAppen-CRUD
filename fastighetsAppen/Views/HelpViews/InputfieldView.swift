@@ -37,6 +37,7 @@ struct InputfieldView: View {
                             .stroke(Color.white,  lineWidth: 2)
                 )
         }
+        .padding(.bottom, 20)
         .padding(.horizontal)
         
     }

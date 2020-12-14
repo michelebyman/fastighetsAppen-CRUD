@@ -23,6 +23,9 @@ struct AddTenants: View {
     @State var propertyName : String
     
     @State private var showingAlert = false
+    @State var isAddTenentMode = false
+   
+
     
     let smssend = SMSSender()
     
@@ -64,33 +67,45 @@ struct AddTenants: View {
                         }
                     }
                     .padding()
-
-                    Button(action: sendMessage) {
-                        Text("Send SMS")
-                            .foregroundColor(Color(.white))
-                            .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    if (tenants.count > 0) {
+                        Button(action: sendMessage) {
+                            Text((tenants.count > 1) ? "Send group SMS" : "Send SMS")
+                                .foregroundColor(Color(.white))
+                                .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                        }
+                        .background(Color(.systemPink))
+                        .cornerRadius(25)
+                        .padding(.top, 10)
                     }
-                    .background(Color(.systemPink))
-                    .cornerRadius(25)
-                    .padding(.top, 10)
                     
                     Text("Add tenants for \(propertyName) ")
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         .padding()
-                    
-                    InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
-                    InputfieldView(inputText: $lastname, imageName: "person", placeholderText: "lastname", keyboardType: .default)
-                    InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
-                    InputfieldView(inputText: $phone, imageName: "phone", placeholderText: "Phone", keyboardType: .numberPad)
-                    
-                    Button(action: addTenants) {
-                        Text("Add tenant")
-                            .foregroundColor(Color(.white))
-                            .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+
+                    if (tenants.count == 0 || isAddTenentMode) {
+                        InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
+                        InputfieldView(inputText: $lastname, imageName: "person", placeholderText: "lastname", keyboardType: .default)
+                        InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
+                        InputfieldView(inputText: $phone, imageName: "phone", placeholderText: "Phone", keyboardType: .numberPad)
+
+                        Button(action: addTenants) {
+                            Text("Add tenant")
+                                .foregroundColor(Color(.white))
+                                .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                        }
+                        .background(Color(.systemPink))
+                        .cornerRadius(25)
+                        .padding(.top, 10)
+                    } else {
+                        Button(action: {isAddTenentMode.toggle()}) {
+                            Text("Add")
+                                .foregroundColor(Color(.white))
+                                .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                        }
+                        .background(Color(.systemPink))
+                        .cornerRadius(25)
+                        .padding(.top, 10)
                     }
-                    .background(Color(.systemPink))
-                    .cornerRadius(25)
-                    .padding(.top, 10)
                     
                     
                     
