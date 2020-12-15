@@ -34,17 +34,14 @@ struct PropertyOwnerHomeView: View {
         }
         .onAppear() {
             if (Auth.auth().currentUser == nil) {
-                print("----------------------USer is not loggedin",Auth.auth().currentUser!)
                 isSignedOut = false
-
             }
         }
-        .accentColor(.pink)
+       
     }
     
     func signOut()  {
         let firebaseAuth = Auth.auth()
-        
         do {
             try firebaseAuth.signOut()
             isSignedOut = true

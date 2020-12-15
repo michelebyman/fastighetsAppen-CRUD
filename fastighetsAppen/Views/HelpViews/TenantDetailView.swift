@@ -42,27 +42,20 @@ struct TenantDetailView: View {
                                 }
 
                             }
-                            if isEditMode  {
-                            Button(action: updateTenant) {
-                                Text("Done")
-                                    .foregroundColor(Color(.systemPink))
 
-                            }
-
-                            }
                         }.offset(y: -50)
                         VStack {
                             Image(systemName: "person.fill").resizable().frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                             HStack {
                                 Text("\(name) \(lastname)")
-                                    .font(.caption)
+                                    .font(.callout)
                             }.padding(.top,5)
                             Text(email)
-                                .font(.caption)
+                                .font(.callout)
                                 .foregroundColor(Color(.white))
                                 .padding(.top,5)
                             Text(phone)
-                                .font(.caption)
+                                .font(.callout)
                                 .foregroundColor(Color(.white))
                                 .padding(.top,5)
                                 .padding(.bottom,5)
@@ -75,14 +68,14 @@ struct TenantDetailView: View {
                     .padding()
                     .border(Color.white, width: 2)
                     if !isEditMode  {
-                    Button(action: sendMessage) {
-                        Text("Send SMS")
-                            .foregroundColor(Color(.white))
-                            .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    }
-                    .background(Color(.systemPink))
-                    .cornerRadius(25)
-                    .padding(.top, 30)
+                        Button(action: sendMessage) {
+                            Text("Send SMS")
+                                .foregroundColor(Color(.white))
+                                .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                        }
+                        .background(Color(.systemPink))
+                        .cornerRadius(25)
+                        .padding(.top, 30)
                     }
 
                     if isEditMode {
@@ -94,29 +87,37 @@ struct TenantDetailView: View {
                 }
                 .padding()
 
-            .navigationBarItems(
-                trailing:
-                    Button(action: {
-                        self.showingAlert = true
-                    }) {
-                        Text("Delete tenant")
-                    }
-                    .alert(isPresented:$showingAlert) {
-                        Alert(title: Text("Are you sure you want to delete this tenant"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
-                            deleteTenant()
-                        }, secondaryButton: .cancel())
-                    }
-            )
+                .navigationBarItems(
+                    trailing:
 
+                        ZStack {
+                            if isEditMode {
+                                Button(action: updateTenant) {
+                                    Text("Done")
+                                }
+                            } else {
+                                Button(action: {
+                                    self.showingAlert = true
+                                }) {
+                                    Text("Delete tenant")
+                                }
+                                .alert(isPresented:$showingAlert) {
+                                    Alert(title: Text("Are you sure you want to delete this tenant"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
+                                        deleteTenant()
+                                    }, secondaryButton: .cancel())
+                                }
+                            }
 
+                        }
 
-        }.onAppear {
-            name = tenant.name
-            lastname = tenant.lastname
-            email = tenant.email
-            phone = tenant.phone
+                )
+            }.onAppear {
+                name = tenant.name
+                lastname = tenant.lastname
+                email = tenant.email
+                phone = tenant.phone
+            }
         }
-    }
     }
 
 
@@ -138,10 +139,7 @@ struct TenantDetailView: View {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         ref.child("PropertyOwners").child("properties").child(Auth.auth().currentUser!.uid).child(propertyID).child("tenants").child(tenant.id).removeValue()
-
-
         presentationMode.wrappedValue.dismiss()
-        print("deleting")
     }
 }
 

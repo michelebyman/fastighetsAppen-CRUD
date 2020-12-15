@@ -26,10 +26,11 @@ struct InputfieldView: View {
                     .font(.body)
                     
                 }.padding(.leading)
+                
             }
             TextField("", text: $inputText)
                 .frame(minWidth: 0, maxWidth: .infinity)
-                .font(.system(size: 18))
+                .font(.body)
                 .padding()
                 .keyboardType(keyboardType)
                 .foregroundColor(.white)
@@ -37,6 +38,7 @@ struct InputfieldView: View {
                             .stroke(Color.white,  lineWidth: 2)
                 )
         }
+        
         .padding(.bottom, 20)
         .padding(.horizontal)
         

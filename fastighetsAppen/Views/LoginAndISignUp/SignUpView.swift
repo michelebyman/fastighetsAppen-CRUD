@@ -113,8 +113,7 @@ struct SignUpView: View {
         Auth.auth().createUser(withEmail: email, password: password, completion: {
             signUpResult, SignUpError in
             if (SignUpError == nil) {
-                if let user = Auth.auth().currentUser {
-                    print("user id --------->",user.uid)
+                if Auth.auth().currentUser != nil {
                     isLoggedIn = true
                 }
                 savePropertyOwner()

@@ -110,14 +110,9 @@ struct LoginView: View {
             .onAppear() {
                 isError = false
                 if (Auth.auth().currentUser == nil) {
-                    print("----------------------USer is not loggedin",Auth.auth().currentUser)
                     isLoggedIn = false
-                    
                 } else {
-                    print("----------------------USer is loggedin-------------",Auth.auth().currentUser)
-                    if let user = Auth.auth().currentUser {
-                        print("user id --------->",user.uid)
-                        
+                    if Auth.auth().currentUser != nil {
                         isLoggedIn = true
                     }
                 }

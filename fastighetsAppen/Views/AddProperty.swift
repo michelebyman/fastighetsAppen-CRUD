@@ -21,7 +21,7 @@ struct AddProperty: View {
         ZStack {
             Color("backgroundColor")
                 .ignoresSafeArea(.all)
-            VStack{
+            ScrollView{
                 //                Spacer()
                 Text("Welcome!")
                     .foregroundColor(Color(.white))
@@ -35,15 +35,15 @@ struct AddProperty: View {
                                     Image(systemName: "house.fill")
                                         .resizable()
                                         .foregroundColor(Color(.white))
-                                        .frame(width: 50, height: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                    Text(item.propertyName).font(.caption).padding(.top,5)
+                                        .frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/).padding(.top,5)
+                                    Text(item.propertyName).font(.callout).padding(.top,5)
                                     if let counter = item.tentansCounter {
                                         if counter != "" {
                                             HStack {
                                                 Image(systemName: "person.fill")
                                                     .resizable()
-                                                    .frame(width: 10, height: 10)
-                                                Text(item.tentansCounter!).font(.caption2)
+                                                    .frame(width: 12, height: 12)
+                                                Text(item.tentansCounter!).font(.callout)
                                             }
                                             .foregroundColor(Color(.white))
                                             .padding(.top,5)
@@ -51,23 +51,25 @@ struct AddProperty: View {
                                     }
                                 }
                             }
-                            .frame(maxWidth: .infinity, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 100, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            .frame(maxWidth: .infinity, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+
                             .padding()
                             .border(Color.white, width: 2)
-                        }
+                        }.background(Color("cardColor"))
                     }
                 }
                 .padding()
                 Spacer()
                 
                 InputfieldView(inputText: $propertyName, imageName: "house", placeholderText: "Add property name", keyboardType: .default)
+                    .padding(.top, 30)
                     .padding(.horizontal)
                     .onChange(of: propertyName, perform: { value in
                         if !value.isEmpty {
                             isError = false
-                        } 
+                        }
                     })
-
+                
                 if isError {
                     Text("You have to add a property name")
                 }
@@ -77,9 +79,11 @@ struct AddProperty: View {
                         .foregroundColor(Color(.white))
                         .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 }
+                
                 .background(Color(.systemPink))
                 .cornerRadius(25)
                 .padding()
+
             }
             .padding(.bottom, 30)
             
@@ -95,17 +99,14 @@ struct AddProperty: View {
     
     func getPropertyName() {
         var ref: DatabaseReference!
-        
         ref = Database.database().reference()
         let userID = Auth.auth().currentUser?.uid
-        
         ref.child("PropertyOwners").child("owners").child(userID!).observeSingleEvent(of: .value, with: { (snapshot) in
             // Get user value
             let value = snapshot.value as? NSDictionary
             let usernameFromDatabase = value?["name"] as? String ?? ""
             //                    print("username------->",username)
             username = usernameFromDatabase
-            
             // ...
         }) { (error) in
             print(error.localizedDescription)
@@ -114,13 +115,10 @@ struct AddProperty: View {
     
     
     func saveProperty() {
-
         if propertyName == "" {isError = true; return}
         var ref: DatabaseReference!
         ref = Database.database().reference()
-        
         let propertyData = ["owner": Auth.auth().currentUser!.uid, "propertyName" : propertyName]
-        
         ref.child("PropertyOwners").child("properties").child(Auth.auth().currentUser!.uid).childByAutoId().setValue(propertyData) { err, result in
             //                print("id I need!!!!" \(result.key!))
         }

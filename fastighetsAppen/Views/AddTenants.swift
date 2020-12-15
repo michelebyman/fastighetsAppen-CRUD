@@ -24,7 +24,7 @@ struct AddTenants: View {
     
     @State private var showingAlert = false
     @State var isAddTenentMode = false
-   
+
 
     
     let smssend = SMSSender()
@@ -46,24 +46,28 @@ struct AddTenants: View {
                                         
                                         HStack {
                                             Text("\(tenant.name) \(tenant.lastname)")
-                                                .font(.caption)
+                                                .font(.callout)
                                         }.padding(.top,5)
                                         Text(tenant.email)
-                                            .font(.caption)
+                                            .font(.callout)
                                             .foregroundColor(Color(.white))
                                             .padding(.top,5)
                                         Text(tenant.phone)
-                                            .font(.caption)
+                                            .font(.callout)
                                             .foregroundColor(Color(.white))
                                             .padding(.top,5)
                                             .padding(.bottom,5)
+
                                         
                                     }
                                 }
                                 .frame(maxWidth: .infinity, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+
                                 .padding()
                                 .border(Color.white, width: 2)
-                            }
+
+
+                            }.background(Color("cardColor"))
                         }
                     }
                     .padding()
@@ -93,6 +97,7 @@ struct AddTenants: View {
                                 .foregroundColor(Color(.white))
                                 .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                         }
+                        .ignoresSafeArea(.keyboard, edges: .bottom)
                         .background(Color(.systemPink))
                         .cornerRadius(25)
                         .padding(.top, 10)
@@ -106,11 +111,7 @@ struct AddTenants: View {
                         .cornerRadius(25)
                         .padding(.top, 10)
                     }
-                    
-                    
-                    
 
-                    
                 }.padding()
                 .navigationBarItems(
                     trailing:
@@ -136,12 +137,10 @@ struct AddTenants: View {
     
     
     func sendMessage() {
-        
         var smsnumbers = [String]()
         tenants.forEach { tenant in
             smsnumbers.append(tenant.phone)
         }
-        
         smssend.sendSMS(sendTo: smsnumbers)
     }
     
