@@ -79,11 +79,10 @@ struct AddProperty: View {
                         .foregroundColor(Color(.white))
                         .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 }
-                
-                .background(Color(.systemPink))
-                .cornerRadius(25)
-                .padding()
-
+                .background(Color("buttonColor"))
+                .cornerRadius(15)
+                .padding(.top, 10)
+                .padding([.trailing, .leading], 50)
             }
             .padding(.bottom, 30)
             

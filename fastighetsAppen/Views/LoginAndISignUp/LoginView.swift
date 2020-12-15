@@ -36,9 +36,11 @@ struct LoginView: View {
                             }
                         }
                         .frame(width: 250, height: 250, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/).padding()
-                        InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
+                        InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress) 
                         
                         ZStack(alignment: .leading) {
+                            RoundedRectangle(cornerRadius: 15, style: .continuous)
+                                            .fill(Color("inputColor"))
                             if password.isEmpty {
                                 HStack {
                                     Image(systemName: "lock").foregroundColor(.white)
@@ -52,14 +54,14 @@ struct LoginView: View {
                                 if showPassword {
                                     TextField("", text: $password)
                                         .frame(minWidth: 0, maxWidth: .infinity)
-                                        .font(.system(size: 18))
+                                        .font(.body)
                                         .padding()
                                         .keyboardType(.default)
                                     
                                 } else {
                                     SecureField("", text: $password)
                                         .frame(minWidth: 0, maxWidth: .infinity)
-                                        .font(.system(size: 18))
+                                        .font(.body)
                                         .padding()
                                         .keyboardType(.default)
                                 }
@@ -74,12 +76,11 @@ struct LoginView: View {
                                 
                             }
                             .foregroundColor(.white)
-                            .overlay(RoundedRectangle(cornerRadius: 25)
-                                        .stroke(Color.white,  lineWidth: 2)
-                            )
+
                           
                             
                         }
+                        .padding(.bottom, 10)
                         .padding(.horizontal)
                         
                         if isError { Text("\(errorMessage)").padding() }
@@ -88,10 +89,10 @@ struct LoginView: View {
                                 .foregroundColor(Color(.white))
                                 .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                         }
-                        .background(Color(.systemPink))
-                        .cornerRadius(25)
+                        .background(Color("buttonColor"))
+                        .cornerRadius(15)
                         .padding(.top, 10)
-                        .padding()
+                        .padding([.trailing, .leading], 50)
                         .navigationBarItems(trailing: NavigationLink(
                                                 destination: SignUpView(),
                                                 label: {

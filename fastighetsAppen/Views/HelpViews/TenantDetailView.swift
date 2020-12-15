@@ -67,15 +67,18 @@ struct TenantDetailView: View {
                     .frame(maxWidth: .infinity, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     .padding()
                     .border(Color.white, width: 2)
+                    .background(Color("cardColor"))
                     if !isEditMode  {
                         Button(action: sendMessage) {
                             Text("Send SMS")
                                 .foregroundColor(Color(.white))
                                 .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                         }
-                        .background(Color(.systemPink))
-                        .cornerRadius(25)
-                        .padding(.top, 30)
+                        .background(Color("buttonColor"))
+                        .cornerRadius(15)
+                        .padding(.top, 10)
+                        .padding([.trailing, .leading], 50)
+                        
                     }
 
                     if isEditMode {

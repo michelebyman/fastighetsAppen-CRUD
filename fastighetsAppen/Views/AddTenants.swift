@@ -77,9 +77,11 @@ struct AddTenants: View {
                                 .foregroundColor(Color(.white))
                                 .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                         }
-                        .background(Color(.systemPink))
-                        .cornerRadius(25)
+                        .background(Color("buttonColor"))
+                        .cornerRadius(15)
                         .padding(.top, 10)
+                        .padding([.trailing, .leading], 50)
+                        
                     }
                     
                     Text("Add tenants for \(propertyName) ")
@@ -97,19 +99,23 @@ struct AddTenants: View {
                                 .foregroundColor(Color(.white))
                                 .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                         }
-                        .ignoresSafeArea(.keyboard, edges: .bottom)
-                        .background(Color(.systemPink))
-                        .cornerRadius(25)
+                        .background(Color("buttonColor"))
+                        .cornerRadius(15)
                         .padding(.top, 10)
+                        .padding([.trailing, .leading], 50)
+
+
                     } else {
                         Button(action: {isAddTenentMode.toggle()}) {
                             Text("Add")
                                 .foregroundColor(Color(.white))
                                 .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                         }
-                        .background(Color(.systemPink))
-                        .cornerRadius(25)
+                        .background(Color("buttonColor"))
+                        .cornerRadius(15)
                         .padding(.top, 10)
+                        .padding([.trailing, .leading], 50)
+
                     }
 
                 }.padding()

@@ -18,12 +18,17 @@ struct InputfieldView: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
+            RoundedRectangle(cornerRadius: 15, style: .continuous)
+                            .fill(Color("inputColor"))
+                .frame(width: .infinity, height: 50)
+
             if inputText.isEmpty {
                 HStack {
                     Image(systemName: imageName).foregroundColor(.white)
                     Text(placeholderText)
                     .foregroundColor(.white )
                     .font(.body)
+                    
                     
                 }.padding(.leading)
                 
@@ -34,14 +39,11 @@ struct InputfieldView: View {
                 .padding()
                 .keyboardType(keyboardType)
                 .foregroundColor(.white)
-                .overlay(RoundedRectangle(cornerRadius: 25)
-                            .stroke(Color.white,  lineWidth: 2)
-                )
+
         }
-        
-        .padding(.bottom, 20)
         .padding(.horizontal)
-        
+        .padding(.bottom, 20)
+
     }
 }
 

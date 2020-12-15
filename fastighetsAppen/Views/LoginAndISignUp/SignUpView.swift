@@ -42,6 +42,8 @@ struct SignUpView: View {
                     InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
                     
                     ZStack(alignment: .leading) {
+                        RoundedRectangle(cornerRadius: 15, style: .continuous)
+                                        .fill(Color("inputColor"))
                         if password.isEmpty {
                             HStack {
                                 Image(systemName: "lock").foregroundColor(.white)
@@ -76,12 +78,11 @@ struct SignUpView: View {
                             }
                             
                         }.foregroundColor(.white)
-                        .overlay(RoundedRectangle(cornerRadius: 25)
-                                    .stroke(Color.white,  lineWidth: 2)
-                        )
+                        
                         
                         
                     }
+                    .padding(.bottom, 10)
                     .padding(.horizontal)
                     if isErrorSigningIn {Text("\(errorMessage)")}
                     Button(action: signUp) {
@@ -89,10 +90,11 @@ struct SignUpView: View {
                             .foregroundColor(Color(.white))
                             .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     }
-                    .background(Color(.systemPink))
-                    .cornerRadius(25)
+
+                    .background(Color("buttonColor"))
+                    .cornerRadius(15)
                     .padding(.top, 10)
-                    .padding()
+                    .padding([.trailing, .leading], 50)
                     Spacer()
                 }.fullScreenCover(isPresented: $isLoggedIn, content: {
                     PropertyOwnerHomeView()
