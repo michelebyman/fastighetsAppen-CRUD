@@ -37,7 +37,6 @@ struct TenantDetailView: View {
                             if !isEditMode {
                                 Button(action: {isEditMode = true}) {
                                     Text("Edit")
-                                        .foregroundColor(Color(.systemPink))
 
                                 }
 
@@ -45,10 +44,10 @@ struct TenantDetailView: View {
 
                         }.offset(y: -50)
                         VStack {
-                            Image(systemName: "person.fill").resizable().frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            Image(systemName: "person.fill").resizable().frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/).foregroundColor(Color(.white))
                             HStack {
                                 Text("\(name) \(lastname)")
-                                    .font(.callout)
+                                    .font(.callout).foregroundColor(Color(.white))
                             }.padding(.top,5)
                             Text(email)
                                 .font(.callout)
@@ -61,13 +60,13 @@ struct TenantDetailView: View {
                                 .padding(.bottom,5)
                         }
 
-
-
                     }
-                    .frame(maxWidth: .infinity, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                    .frame(maxWidth: .infinity, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                     .padding()
+                    
                     .border(Color.white, width: 2)
                     .background(Color("cardColor"))
+
                     if !isEditMode  {
                         Button(action: sendMessage) {
                             Text("Send SMS")
@@ -76,7 +75,7 @@ struct TenantDetailView: View {
                         }
                         .background(Color("buttonColor"))
                         .cornerRadius(15)
-                        .padding(.top, 10)
+                        .padding(.top, 20)
                         .padding([.trailing, .leading], 50)
                         
                     }
@@ -96,13 +95,13 @@ struct TenantDetailView: View {
                         ZStack {
                             if isEditMode {
                                 Button(action: updateTenant) {
-                                    Text("Done")
+                                    Text("Done").foregroundColor(Color("navColor"))
                                 }
                             } else {
                                 Button(action: {
                                     self.showingAlert = true
                                 }) {
-                                    Text("Delete tenant")
+                                    Text("Delete tenant").foregroundColor(.red)
                                 }
                                 .alert(isPresented:$showingAlert) {
                                     Alert(title: Text("Are you sure you want to delete this tenant"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {

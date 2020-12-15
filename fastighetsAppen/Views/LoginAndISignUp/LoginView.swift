@@ -22,20 +22,19 @@ struct LoginView: View {
             ZStack{
                 Color("backgroundColor")
                     .ignoresSafeArea(.all)
+
                 ScrollView {
+                    ZStack {
+
+
+                            Image("background")
+                                .resizable()
+
+                    }
+                    .frame(width: .infinity, height: 400, alignment: .center)
+                    .padding(.top, -100)
                     VStack {
-                        ZStack {
-                            Circle()
-                                .foregroundColor(.green)
-                            Circle()
-                                .strokeBorder(Color.blue, lineWidth: 50)
-                            HStack {
-                                Image(systemName: "house.fill")
-                                    .resizable()
-                                    .frame(width: 50, height: 50, alignment: .center)
-                            }
-                        }
-                        .frame(width: 250, height: 250, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/).padding()
+
                         InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress) 
                         
                         ZStack(alignment: .leading) {
@@ -97,10 +96,10 @@ struct LoginView: View {
                                                 destination: SignUpView(),
                                                 label: {
                                                     Text("Register")
+                                                        .foregroundColor(Color("navColor"))
                                                         .frame(maxWidth: .infinity, minHeight: 50, alignment: .center)
                                                 })
                         )
-                        .navigationBarTitle("Login")
                     }.fullScreenCover(isPresented: $isLoggedIn, content: {
                         PropertyOwnerHomeView()
                     })
@@ -117,9 +116,9 @@ struct LoginView: View {
                         isLoggedIn = true
                     }
                 }
-            }
+            }.navigationBarTitle("Login").foregroundColor(.white)
         }
-        .accentColor(.pink)
+        .accentColor(Color("navColor"))
     }
     
     func signIn() {

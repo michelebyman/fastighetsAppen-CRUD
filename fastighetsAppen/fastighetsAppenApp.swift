@@ -18,7 +18,7 @@ struct fastighetsAppenApp: App {
     
     var body: some Scene {
         WindowGroup {
-            LoginView()
+            PropertyOwnerHomeView()
         }
     }
 }

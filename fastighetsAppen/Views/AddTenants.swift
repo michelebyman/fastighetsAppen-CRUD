@@ -81,11 +81,12 @@ struct AddTenants: View {
                         .cornerRadius(15)
                         .padding(.top, 10)
                         .padding([.trailing, .leading], 50)
-                        
+
                     }
                     
                     Text("Add tenants for \(propertyName) ")
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                        .foregroundColor(Color(.white))
                         .padding()
 
                     if (tenants.count == 0 || isAddTenentMode) {
@@ -124,7 +125,7 @@ struct AddTenants: View {
                         Button(action: {
                             self.showingAlert = true
                         }) {
-                            Text("Delete property")
+                            Text("Delete property").foregroundColor(.red)
                         }
                         .alert(isPresented:$showingAlert) {
                             Alert(title: Text("Are you sure you want to delete this property and all tenants?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {

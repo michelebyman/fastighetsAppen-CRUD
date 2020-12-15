@@ -28,16 +28,14 @@ struct SignUpView: View {
                 VStack {
                     Spacer()
                     ZStack {
-                        Circle()
-                            .foregroundColor(.green)
-                        Circle()
-                            .strokeBorder(Color.blue, lineWidth: 50)
-                        Image(systemName: "person.fill")
-                            .resizable()
-                            .frame(width: 50, height: 50, alignment: .center)
+
+
+                            Image("background")
+                                .resizable()
+
                     }
-                    .frame(width: 250, height: 250, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    .padding()
+                    .frame(width: .infinity, height: 400, alignment: .center)
+                    .padding(.top, -100)
                     InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
                     InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
                     
@@ -100,7 +98,7 @@ struct SignUpView: View {
                     PropertyOwnerHomeView()
                 })
                 Spacer()
-                    .navigationBarTitle("Register")
+                    .navigationBarTitle("Register").foregroundColor(.white)
             }
         }
     }

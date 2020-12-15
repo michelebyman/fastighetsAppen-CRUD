@@ -18,26 +18,31 @@ struct PropertyOwnerHomeView: View {
             ZStack{
                 Color("backgroundColor")
                     .ignoresSafeArea(.all)
-             
-                    AddProperty()
-             
-                .navigationBarItems(trailing: Button(action: signOut) {
-                    Text("Sign out")
-                    
+                if activeUser {
+                    VStack {
+                        AddProperty()
+                            .navigationBarItems(trailing: Button(action: signOut) {
+                                Text("Sign out")
+
+                            }
+
+                        )
+                    }
                 }
-                .fullScreenCover(isPresented: $isSignedOut, content: {
-                    LoginView()
-                })
-                )
+
             }
             
-        }
+        }.fullScreenCover(isPresented: $isSignedOut, content: {
+            LoginView()
+        })
         .onAppear() {
             if (Auth.auth().currentUser == nil) {
-                isSignedOut = false
+                isSignedOut = true
+            } else {
+                activeUser = true
             }
         }
-       
+
     }
     
     func signOut()  {
