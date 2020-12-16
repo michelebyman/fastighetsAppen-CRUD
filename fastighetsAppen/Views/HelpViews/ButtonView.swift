@@ -10,7 +10,7 @@ import SwiftUI
 struct ButtonView: View {
     var text: String
     var imageName: String = ""
-    var backgroundColor: Color
+    var backgroundColor: Color = Color("buttonColor")
     var action: () -> Void
     var isDisabled = false
     var foregroundColor: Color = .white
@@ -21,11 +21,8 @@ struct ButtonView: View {
             Button(action: action , label: {
                 HStack {
                     Spacer()
-                    if (!imageName.isEmpty) {
-                        Image(systemName: imageName)
-                            .font(.body)
-                    }
-                    Text(text).font(.body)
+                    let buttonIcon: Image = Image(systemName: imageName)
+                    Text((imageName.isEmpty) ? "\(text)" : "\(text) \(buttonIcon)").font(.body)
                     Spacer()
                 }
                 .padding()

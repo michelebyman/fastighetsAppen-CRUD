@@ -68,15 +68,7 @@ struct TenantDetailView: View {
                     .background(Color("cardColor"))
 
                     if !isEditMode  {
-                        Button(action: sendMessage) {
-                            Text("Send SMS")
-                                .foregroundColor(Color(.white))
-                                .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        }
-                        .background(Color("buttonColor"))
-                        .cornerRadius(15)
-                        .padding(.top, 20)
-                        .padding([.trailing, .leading], 50)
+                        ButtonView(text: "Send SMS", imageName: "message", backgroundColor:  Color("secondaryButton"), action: {sendMessage()}, foregroundColor: Color("secondaryButtonText"))
                         
                     }
 

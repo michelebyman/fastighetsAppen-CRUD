@@ -74,15 +74,8 @@ struct AddProperty: View {
                     Text("You have to add a property name")
                 }
 
-                Button(action: saveProperty) {
-                    Text("Add Property")
-                        .foregroundColor(Color(.white))
-                        .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                }
-                .background(Color("buttonColor"))
-                .cornerRadius(15)
-                .padding(.top, 10)
-                .padding([.trailing, .leading], 50)
+                ButtonView(text: "Add Property", action: { saveProperty()}, isDisabled: propertyName.isEmpty)
+
             }
             .padding(.bottom, 30)
             

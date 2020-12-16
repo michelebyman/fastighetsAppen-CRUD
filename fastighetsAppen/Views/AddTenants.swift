@@ -72,21 +72,7 @@ struct AddTenants: View {
                     }
                     .padding()
                     if (tenants.count > 0) {
-                        Button(action: sendMessage) {
-                            HStack {
-                                let messageIcon: Image = Image(systemName: "message")
-
-                                Text((tenants.count > 1) ? "Send group SMS \(messageIcon) " : " Send SMS\(messageIcon)")
-
-                                    .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                            }.foregroundColor(Color("secondaryButtonText"))
-
-                        }
-                        .background(Color("secondaryButton"))
-                        .cornerRadius(15)
-                        .padding(.top, 10)
-                        .padding([.trailing, .leading], 50)
-
+                        ButtonView(text:  (tenants.count > 1) ? "Send group SMS" : "Send SMS", imageName: "message", backgroundColor:  Color("secondaryButton"), action: {sendMessage()}, foregroundColor: Color("secondaryButtonText"))
                     }
                     
                     Text("Add tenants for \(propertyName) ")
@@ -95,33 +81,16 @@ struct AddTenants: View {
                         .padding()
 
                     if (tenants.count == 0 || isAddTenentMode) {
+
                         InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
                         InputfieldView(inputText: $lastname, imageName: "person", placeholderText: "lastname", keyboardType: .default)
                         InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
                         InputfieldView(inputText: $phone, imageName: "phone", placeholderText: "Phone", keyboardType: .numberPad)
 
-                        Button(action: addTenants) {
-                            Text("Add tenant")
-                                .foregroundColor(Color(.white))
-                                .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        }
-                        .background(Color("buttonColor"))
-                        .cornerRadius(15)
-                        .padding(.top, 10)
-                        .padding([.trailing, .leading], 50)
-
+                        ButtonView(text: "Add tenant", action: {addTenants()}, isDisabled: name.isEmpty || lastname.isEmpty || phone.isEmpty)
 
                     } else {
-                        Button(action: {isAddTenentMode.toggle()}) {
-                            Text("Add")
-                                .foregroundColor(Color(.white))
-                                .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                        }
-                        .background(Color("buttonColor"))
-                        .cornerRadius(15)
-                        .padding(.top, 10)
-                        .padding([.trailing, .leading], 50)
-
+                        ButtonView(text: "Add", action: {isAddTenentMode.toggle()})
                     }
 
                 }.padding()
