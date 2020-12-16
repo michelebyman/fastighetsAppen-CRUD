@@ -22,7 +22,7 @@ class SMSSender : NSObject, MFMessageComposeViewControllerDelegate
     {
         let messageVC = MFMessageComposeViewController()
         messageVC.messageComposeDelegate = self
-        messageVC.body = "Message String"
+        messageVC.body = ""
         messageVC.recipients = sendTo // Optionally add some tel numbers
         topMostController().present(messageVC, animated: true)
     }

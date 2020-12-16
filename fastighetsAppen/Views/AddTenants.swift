@@ -73,11 +73,16 @@ struct AddTenants: View {
                     .padding()
                     if (tenants.count > 0) {
                         Button(action: sendMessage) {
-                            Text((tenants.count > 1) ? "Send group SMS" : "Send SMS")
-                                .foregroundColor(Color(.white))
-                                .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            HStack {
+                                let messageIcon: Image = Image(systemName: "message")
+
+                                Text((tenants.count > 1) ? "Send group SMS \(messageIcon) " : " Send SMS\(messageIcon)")
+
+                                    .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                            }.foregroundColor(Color("secondaryButtonText"))
+
                         }
-                        .background(Color("buttonColor"))
+                        .background(Color("secondaryButton"))
                         .cornerRadius(15)
                         .padding(.top, 10)
                         .padding([.trailing, .leading], 50)

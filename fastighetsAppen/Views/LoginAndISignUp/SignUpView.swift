@@ -18,7 +18,7 @@ struct SignUpView: View {
     @State var isError = false
     @State var name = ""
     @State var showPassword = false
-   
+
 
     var body: some View {
         ZStack{
@@ -30,39 +30,42 @@ struct SignUpView: View {
                     ZStack {
 
 
-                            Image("background")
-                                .resizable()
+                        Image("background")
+                            .resizable()
 
                     }
-                    .frame(width: .infinity, height: 400, alignment: .center)
+                    .frame(height: 400)
                     .padding(.top, -100)
+                    .padding(.bottom, 50)
+
                     InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
                     InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
                     
                     ZStack(alignment: .leading) {
                         RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                        .fill(Color("inputColor"))
+                            .fill(Color("inputColor"))
+                            .frame(height: 50)
                         if password.isEmpty {
                             HStack {
-                                Image(systemName: "lock").foregroundColor(.white)
+                                Image(systemName: "lock")
                                 Text("Password")
-                                    .foregroundColor(.white )
                                     .font(.body)
                             }
+                            .foregroundColor(.white )
                             .padding(.horizontal)
                         }
                         HStack {
                             if showPassword {
                                 TextField("", text: $password)
                                     .frame(minWidth: 0, maxWidth: .infinity)
-                                    .font(.system(size: 18))
+                                    .font(.body )
                                     .padding()
                                     .keyboardType(.default)
                                 
                             } else {
                                 SecureField("", text: $password)
                                     .frame(minWidth: 0, maxWidth: .infinity)
-                                    .font(.system(size: 18))
+                                    .font(.body)
                                     .padding()
                                     .keyboardType(.default)
                             }
@@ -70,35 +73,24 @@ struct SignUpView: View {
                             if !password.isEmpty {
                                 Button(action: {showPassword.toggle()}) {
                                     Image(systemName: showPassword ? "eye" : "eye.slash")
-                                        .foregroundColor(.white)
                                         .padding(.trailing)
                                 }
                             }
                             
-                        }.foregroundColor(.white)
-                        
-                        
-                        
+                        }
+                        .frame(height: 50)
+                        .foregroundColor(.white)
                     }
                     .padding(.bottom, 10)
                     .padding(.horizontal)
                     if isErrorSigningIn {Text("\(errorMessage)")}
-                    Button(action: signUp) {
-                        Text("Sign up")
-                            .foregroundColor(Color(.white))
-                            .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                    }
-
-                    .background(Color("buttonColor"))
-                    .cornerRadius(15)
-                    .padding(.top, 10)
-                    .padding([.trailing, .leading], 50)
+                    ButtonView(text: "Sign up", backgroundColor: Color("buttonColor"), action: {signUp()}, isDisabled: name.isEmpty || email.isEmpty || password.isEmpty, foregroundColor: Color(.white))
                     Spacer()
                 }.fullScreenCover(isPresented: $isLoggedIn, content: {
                     PropertyOwnerHomeView()
                 })
                 Spacer()
-                    .navigationBarTitle("Register").foregroundColor(.white)
+
             }
         }
     }
@@ -117,7 +109,7 @@ struct SignUpView: View {
                     isLoggedIn = true
                 }
                 savePropertyOwner()
-               
+
             } else {
                 errorMessage = (SignUpError?.localizedDescription ?? "")
                 isErrorSigningIn = true

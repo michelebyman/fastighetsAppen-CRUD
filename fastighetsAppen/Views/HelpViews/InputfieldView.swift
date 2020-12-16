@@ -28,8 +28,6 @@ struct InputfieldView: View {
                     Text(placeholderText)
                     .foregroundColor(.white )
                     .font(.body)
-                    
-                    
                 }.padding(.leading)
                 
             }
@@ -42,7 +40,7 @@ struct InputfieldView: View {
 
         }
         .padding(.horizontal)
-        .padding(.bottom, 20)
+
 
     }
 }

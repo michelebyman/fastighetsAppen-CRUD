@@ -23,40 +23,39 @@ struct LoginView: View {
                 Color("backgroundColor")
                     .ignoresSafeArea(.all)
 
-                ScrollView {
+                VStack {
                     ZStack {
-
-
-                            Image("background")
-                                .resizable()
-
+                        Image("background1024")
+                            .resizable()
+                            .padding(.top, -150)
                     }
-                    .frame(width: .infinity, height: 400, alignment: .center)
-                    .padding(.top, -100)
+                    .frame(height: 300)
+                    .padding(.bottom, 20)
                     VStack {
 
-                        InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress) 
+                        InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
                         
                         ZStack(alignment: .leading) {
                             RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                            .fill(Color("inputColor"))
+                                .fill(Color("inputColor"))
+                                .frame(height: 50)
                             if password.isEmpty {
                                 HStack {
-                                    Image(systemName: "lock").foregroundColor(.white)
+                                    Image(systemName: "lock")
                                     Text("Password")
-                                        .foregroundColor(.white )
                                         .font(.body)
                                 }
+                                .foregroundColor(.white )
                                 .padding(.horizontal)
                             }
                             HStack {
                                 if showPassword {
                                     TextField("", text: $password)
                                         .frame(minWidth: 0, maxWidth: .infinity)
-                                        .font(.body)
+                                        .font(.body )
                                         .padding()
                                         .keyboardType(.default)
-                                    
+
                                 } else {
                                     SecureField("", text: $password)
                                         .frame(minWidth: 0, maxWidth: .infinity)
@@ -68,39 +67,32 @@ struct LoginView: View {
                                 if !password.isEmpty {
                                     Button(action: {showPassword.toggle()}) {
                                         Image(systemName: showPassword ? "eye" : "eye.slash")
-                                            .foregroundColor(.white)
                                             .padding(.trailing)
                                     }
                                 }
-                                
-                            }
-                            .foregroundColor(.white)
 
-                          
-                            
+                            }
+                            .frame(height: 50)
+                            .foregroundColor(.white)
                         }
                         .padding(.bottom, 10)
                         .padding(.horizontal)
+
                         
                         if isError { Text("\(errorMessage)").padding() }
-                        Button(action: signIn) {
-                            Text("Login")
-                                .foregroundColor(Color(.white))
-                                .frame(maxWidth: .infinity, minHeight: 50, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+
+                        ButtonView(text: "Login", backgroundColor: Color("buttonColor"), action: {signIn()}, isDisabled: email.isEmpty || password.isEmpty)
+
+                        HStack {
+                            Text("New here?").foregroundColor(.white).opacity(0.6).font(.callout)
+                            NavigationLink(destination: SignUpView()) {
+                                Text("Create an account").font(.callout).foregroundColor(.white)
+                            }
                         }
-                        .background(Color("buttonColor"))
-                        .cornerRadius(15)
-                        .padding(.top, 10)
-                        .padding([.trailing, .leading], 50)
-                        .navigationBarItems(trailing: NavigationLink(
-                                                destination: SignUpView(),
-                                                label: {
-                                                    Text("Register")
-                                                        .foregroundColor(Color("navColor"))
-                                                        .frame(maxWidth: .infinity, minHeight: 50, alignment: .center)
-                                                })
-                        )
-                    }.fullScreenCover(isPresented: $isLoggedIn, content: {
+
+                        .padding(.bottom, 50)
+                    }
+                    .fullScreenCover(isPresented: $isLoggedIn, content: {
                         PropertyOwnerHomeView()
                     })
                     
@@ -116,9 +108,9 @@ struct LoginView: View {
                         isLoggedIn = true
                     }
                 }
-            }.navigationBarTitle("Login").foregroundColor(.white)
+            }
         }
-        .accentColor(Color("navColor"))
+
     }
     
     func signIn() {
