@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		6AECC15F30291ACF064BDAF0 /* Pods_fastighetsAppen.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B457EA97C70246A6FFE0649 /* Pods_fastighetsAppen.framework */; };
 		D1136EDB258A49E80054A82B /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1136EDA258A49E80054A82B /* ButtonView.swift */; };
+		D1136EE3258AAC8B0054A82B /* PasswordTextfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1136EE2258AAC8B0054A82B /* PasswordTextfieldView.swift */; };
 		D13276FB25878E3A00DB52AA /* TenantDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13276FA25878E3A00DB52AA /* TenantDetailView.swift */; };
 		D13277022587B3C200DB52AA /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = D13277012587B3C100DB52AA /* .gitignore */; };
 		D13C7C6F25825E0C00F3F756 /* InputfieldView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D13C7C6E25825E0C00F3F756 /* InputfieldView.swift */; };
@@ -31,6 +32,7 @@
 		3B278F984826AEA0BC6FFD10 /* Pods-fastighetsAppen.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-fastighetsAppen.debug.xcconfig"; path = "Target Support Files/Pods-fastighetsAppen/Pods-fastighetsAppen.debug.xcconfig"; sourceTree = "<group>"; };
 		5B457EA97C70246A6FFE0649 /* Pods_fastighetsAppen.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_fastighetsAppen.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D1136EDA258A49E80054A82B /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
+		D1136EE2258AAC8B0054A82B /* PasswordTextfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTextfieldView.swift; sourceTree = "<group>"; };
 		D13276FA25878E3A00DB52AA /* TenantDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TenantDetailView.swift; sourceTree = "<group>"; };
 		D13277012587B3C100DB52AA /* .gitignore */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
 		D13C7C6E25825E0C00F3F756 /* InputfieldView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputfieldView.swift; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 				D13C7C6E25825E0C00F3F756 /* InputfieldView.swift */,
 				D13276FA25878E3A00DB52AA /* TenantDetailView.swift */,
 				D1136EDA258A49E80054A82B /* ButtonView.swift */,
+				D1136EE2258AAC8B0054A82B /* PasswordTextfieldView.swift */,
 			);
 			path = HelpViews;
 			sourceTree = "<group>";
@@ -296,6 +299,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D13C7C6F25825E0C00F3F756 /* InputfieldView.swift in Sources */,
+				D1136EE3258AAC8B0054A82B /* PasswordTextfieldView.swift in Sources */,
 				D1A32B5D257D4CE000A705C5 /* TenantModel.swift in Sources */,
 				D13C7C7225826D1E00F3F756 /* SMSSender.swift in Sources */,
 				D1A32B4F257D2E0600A705C5 /* PropertyOwnerHomeView.swift in Sources */,

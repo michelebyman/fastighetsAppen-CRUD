@@ -20,7 +20,7 @@ struct InputfieldView: View {
         ZStack(alignment: .leading) {
             RoundedRectangle(cornerRadius: 15, style: .continuous)
                             .fill(Color("inputColor"))
-                .frame(width: .infinity, height: 50)
+                .frame(height: 50)
 
             if inputText.isEmpty {
                 HStack {

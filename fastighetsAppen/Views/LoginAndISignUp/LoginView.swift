@@ -34,51 +34,9 @@ struct LoginView: View {
                     VStack {
 
                         InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
-                        
-                        ZStack(alignment: .leading) {
-                            RoundedRectangle(cornerRadius: 15, style: .continuous)
-                                .fill(Color("inputColor"))
-                                .frame(height: 50)
-                            if password.isEmpty {
-                                HStack {
-                                    Image(systemName: "lock")
-                                    Text("Password")
-                                        .font(.body)
-                                }
-                                .foregroundColor(.white )
-                                .padding(.horizontal)
-                            }
-                            HStack {
-                                if showPassword {
-                                    TextField("", text: $password)
-                                        .frame(minWidth: 0, maxWidth: .infinity)
-                                        .font(.body )
-                                        .padding()
-                                        .keyboardType(.default)
 
-                                } else {
-                                    SecureField("", text: $password)
-                                        .frame(minWidth: 0, maxWidth: .infinity)
-                                        .font(.body)
-                                        .padding()
-                                        .keyboardType(.default)
-                                }
-                                Spacer()
-                                if !password.isEmpty {
-                                    Button(action: {showPassword.toggle()}) {
-                                        Image(systemName: showPassword ? "eye" : "eye.slash")
-                                            .padding(.trailing)
-                                    }
-                                }
+                        PasswordTextfieldView(password: $password, showPassword: $showPassword)
 
-                            }
-                            .frame(height: 50)
-                            .foregroundColor(.white)
-                        }
-                        .padding(.bottom, 10)
-                        .padding(.horizontal)
-
-                        
                         if isError { Text("\(errorMessage)").padding() }
 
                         ButtonView(text: "Login", backgroundColor: Color("buttonColor"), action: {signIn()}, isDisabled: email.isEmpty || password.isEmpty)

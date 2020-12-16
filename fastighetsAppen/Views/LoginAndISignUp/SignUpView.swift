@@ -24,65 +24,20 @@ struct SignUpView: View {
         ZStack{
             Color("backgroundColor")
                 .ignoresSafeArea(.all)
-            ScrollView {
+            VStack {
                 VStack {
-                    Spacer()
-                    ZStack {
-
-
-                        Image("background")
-                            .resizable()
-
-                    }
-                    .frame(height: 400)
-                    .padding(.top, -100)
-                    .padding(.bottom, 50)
+                        ZStack {
+                            Image("background1024")
+                                .resizable()
+                                .padding(.top, -150)
+                        }
+                        .frame(height: 250)
+                        .padding(.bottom, 20)
 
                     InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
                     InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
+                    PasswordTextfieldView(password: $password, showPassword: $showPassword)
                     
-                    ZStack(alignment: .leading) {
-                        RoundedRectangle(cornerRadius: 15, style: .continuous)
-                            .fill(Color("inputColor"))
-                            .frame(height: 50)
-                        if password.isEmpty {
-                            HStack {
-                                Image(systemName: "lock")
-                                Text("Password")
-                                    .font(.body)
-                            }
-                            .foregroundColor(.white )
-                            .padding(.horizontal)
-                        }
-                        HStack {
-                            if showPassword {
-                                TextField("", text: $password)
-                                    .frame(minWidth: 0, maxWidth: .infinity)
-                                    .font(.body )
-                                    .padding()
-                                    .keyboardType(.default)
-                                
-                            } else {
-                                SecureField("", text: $password)
-                                    .frame(minWidth: 0, maxWidth: .infinity)
-                                    .font(.body)
-                                    .padding()
-                                    .keyboardType(.default)
-                            }
-                            Spacer()
-                            if !password.isEmpty {
-                                Button(action: {showPassword.toggle()}) {
-                                    Image(systemName: showPassword ? "eye" : "eye.slash")
-                                        .padding(.trailing)
-                                }
-                            }
-                            
-                        }
-                        .frame(height: 50)
-                        .foregroundColor(.white)
-                    }
-                    .padding(.bottom, 10)
-                    .padding(.horizontal)
                     if isErrorSigningIn {Text("\(errorMessage)")}
                     ButtonView(text: "Sign up", backgroundColor: Color("buttonColor"), action: {signUp()}, isDisabled: name.isEmpty || email.isEmpty || password.isEmpty, foregroundColor: Color(.white))
                     Spacer()
@@ -92,7 +47,9 @@ struct SignUpView: View {
                 Spacer()
 
             }
+
         }
+        
     }
     
     func savePropertyOwner() {
