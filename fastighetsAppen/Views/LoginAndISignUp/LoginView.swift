@@ -17,6 +17,8 @@ struct LoginView: View {
     @State var showPassword = false
     @State var emailToReset = ""
     @State var resetEmail = false
+    @State var resetPasswordErrorMessage = ""
+    @State var resetPasswordError = false
     
     
     var body: some View {
@@ -35,6 +37,7 @@ struct LoginView: View {
                     .padding(.bottom, 20)
                     VStack {
                         InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
+//                        if resetPasswordError { Text("\(resetPasswordErrorMessage)").padding() } 
                         if !resetEmail {
                         PasswordTextfieldView(password: $password, showPassword: $showPassword)
                         if isError { Text("\(errorMessage)").padding() }
@@ -47,13 +50,16 @@ struct LoginView: View {
                         }
                         } else {
                             ButtonView(text: "Reset password", backgroundColor: Color("buttonColor"), action: {
-                                Auth.auth().sendPasswordReset(withEmail: email) { error in                             print(error?.localizedDescription)                         }
+                                Auth.auth().sendPasswordReset(withEmail: email) { error in
+                                    resetPasswordErrorMessage =  error!.localizedDescription
+                                    resetPasswordError = true
+                                }
                             }, isDisabled: email.isEmpty)
                         }
                         Button(action: {
                             resetEmail.toggle()
                         }) {
-                            Text(resetEmail ? "Go to login" : "Reset password" ).foregroundColor(.gray).font(.caption)
+                            Text(resetEmail ? "Login" : "Reset password" ).foregroundColor(.gray).font(.caption)
                         }.padding(.top, 10)
 
                     }

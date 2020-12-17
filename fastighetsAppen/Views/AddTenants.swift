@@ -35,106 +35,100 @@ struct AddTenants: View {
                 .ignoresSafeArea(.all)
             ScrollView {
                 VStack {
-                    Text("Add tenants for \(propertyName) ")
+                    Text("Add Tenants For")
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         .foregroundColor(Color(.white))
-                        .padding()
-                    if (!isAddTenentMode) {
-                        ScrollView(.horizontal) {
-                            HStack {
-                                ForEach(tenants) { tenant in
-                                    NavigationLink(destination: TenantDetailView(tenant: TenantModel(id: tenant.id, name: tenant.name, lastname: tenant.lastname, email: tenant.email, phone: tenant.phone), propertyID: id)) {
-                                        VStack {
-                                            Image(systemName: "person.fill")
-                                                .resizable().frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                                .foregroundColor(Color(.white))
+                        .padding(.top, -40)
+                    Text("\(propertyName)")
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                        .foregroundColor(Color(.white))
+                        .padding(.bottom)
+                    ScrollView(.horizontal) {
+                        HStack {
+                            ForEach(tenants) { tenant in
+                                NavigationLink(destination: TenantDetailView(tenant: TenantModel(id: tenant.id, name: tenant.name, lastname: tenant.lastname, email: tenant.email, phone: tenant.phone), propertyID: id)) {
+                                    VStack {
+                                        Image(systemName: "person.fill")
+                                            .resizable().frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                            .foregroundColor(Color(.white))
 
-                                            HStack {
-                                                Text("\(tenant.name) \(tenant.lastname)")
-                                                    .font(.callout)
-                                            }.padding(.top,5)
-                                            Text(tenant.email)
+                                        HStack {
+                                            Text("\(tenant.name) \(tenant.lastname)")
                                                 .font(.callout)
-                                                .foregroundColor(Color(.white))
-                                                .padding(.top,5)
-                                            Text(tenant.phone)
-                                                .font(.callout)
-                                                .foregroundColor(Color(.white))
-                                                .padding(.top,5)
-                                                .padding(.bottom,5)
-
-
-                                        }
+                                        }.padding(.top,5)
+                                        Text(tenant.email)
+                                            .font(.callout)
+                                            .foregroundColor(Color(.white))
+                                            .padding(.top,5)
+                                        Text(tenant.phone)
+                                            .font(.callout)
+                                            .foregroundColor(Color(.white))
+                                            .padding(.top,5)
+                                            .padding(.bottom,5)
                                     }
-                                    .frame(maxWidth: .infinity, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                }
+                                .frame(maxWidth: .infinity, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                .padding()
+                                .border(Color.white, width: 2)
 
-                                    .padding()
-                                    .border(Color.white, width: 2)
 
-
-                                }.background(Color("cardColor"))
-                            }
+                            }.background(Color("cardColor"))
                         }
-                        .padding()
                     }
-                    if (tenants.count > 0 && !isAddTenentMode) {
+                    .padding()
+                    if (tenants.count > 0) {
                         ButtonView(text:  (tenants.count > 1) ? "Send group SMS" : "Send SMS", imageName: "message", backgroundColor:  Color("secondaryButton"), action: {sendMessage()}, foregroundColor: Color("secondaryButtonText"))
+
                     }
-                    
-
-
-                    if (tenants.count == 0 || isAddTenentMode) {
-
-                        InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
-                        InputfieldView(inputText: $lastname, imageName: "person", placeholderText: "lastname", keyboardType: .default)
-                        InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
-                        InputfieldView(inputText: $phone, imageName: "phone", placeholderText: "Phone", keyboardType: .numberPad)
-
-                    } else {
-                        ButtonView(text: "Delete property", imageName:"minus.circle", backgroundColor: Color(.red), action: {self.showingAlert = true}) .alert(isPresented:$showingAlert) {
-                            Alert(title: Text("Are you sure you want to delete this property and all tenants?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
-                                deleteProperty()
-                            }, secondaryButton: .cancel())
-                        }
-                        //                                                Button(action: {
-                        //                                                    self.showingAlert = true
-                        //                                                }) {
-                        //                                                    Text("Delete property").foregroundColor(.red)
-                        //                                                }
-                        //                                                .alert(isPresented:$showingAlert) {
-                        //                                                    Alert(title: Text("Are you sure you want to delete this property and all tenants?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
-                        //                                                        deleteProperty()
-                        //                                                    }, secondaryButton: .cancel())
-                        //                                                }
+                    ButtonView(text: "Delete property", imageName:"minus.circle", backgroundColor: Color(.red), action: {self.showingAlert = true}) .alert(isPresented:$showingAlert) {
+                        Alert(title: Text("Are you sure you want to delete this property and all tenants?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
+                            deleteProperty()
+                        }, secondaryButton: .cancel())
                     }
 
                 }.padding()
                 .navigationBarItems(
                     trailing:
-
-                        HStack {
-                            if (tenants.count == 0 || isAddTenentMode) {
-                                Button(action: addTenants) {
-                                    Text("Done")
-                                }.disabled(name.isEmpty || lastname.isEmpty || phone.isEmpty)
-
-                            } else {
-                                Button(action: {isAddTenentMode.toggle()}) {
-                                    Image(systemName: "person.badge.plus")
-                                }
-                            }
-
+                        Button(action: {isAddTenentMode.toggle()}) {
+                            ZStack {
+                                Image(systemName: "plus").font(.title3)
+                            }.frame(width: 50, height: 50)
                         }
-
-
-
                 )
-                .padding(.bottom, 30)
+
             }
 
             .onAppear() {
                 getTenants()
             }
+            .sheet(isPresented: $isAddTenentMode, content: {
+                ZStack {
+                    Color("backgroundColor")
+                    VStack {
+                        HStack {
+                            Button(action: {isAddTenentMode.toggle()}) {
+                                Text("Cancel")
+                            }
+                            Spacer()
+                            Text("New Tenant").font(.body).fontWeight(.semibold)
+                            Spacer()
+                            Button(action: addTenants) {
+                                Text("Done")
+                            }.disabled(name.isEmpty || lastname.isEmpty || phone.isEmpty)
+
+                        }.padding()
+
+                        Spacer()
+                        InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
+                        InputfieldView(inputText: $lastname, imageName: "person", placeholderText: "lastname", keyboardType: .default)
+                        InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
+                        InputfieldView(inputText: $phone, imageName: "phone", placeholderText: "Phone", keyboardType: .numberPad)
+                        Spacer()
+                    }
+                }
+
+
+            })
         }
     }
     

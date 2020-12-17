@@ -21,12 +21,6 @@ struct PropertyOwnerHomeView: View {
                 if activeUser {
                     VStack {
                         AddProperty()
-                            .navigationBarItems(trailing: Button(action: signOut) {
-                                Text("Sign out")
-
-                            }
-
-                        )
                     }
                 }
 

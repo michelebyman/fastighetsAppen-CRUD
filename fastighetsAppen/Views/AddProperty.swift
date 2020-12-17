@@ -15,18 +15,26 @@ struct AddProperty: View {
     @State var properties = [PropertyModel]()
     @State var id = ""
     @State var isError = false
+    @State var isAddPropertyMode = false
+    @State var isSignedOut = false
 
     
     var body: some View {
         ZStack {
             Color("backgroundColor")
                 .ignoresSafeArea(.all)
-            ScrollView{
-                //                Spacer()
+            VStack{
                 Text("Welcome!")
                     .foregroundColor(Color(.white))
                     .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
-                    .padding(.bottom)
+                    .padding(.top, -40)
+                if (properties.count == 0) {
+                    Text("Add Properties")
+                        .foregroundColor(Color(.white))
+                        .font(.body)
+                        .padding(.bottom)
+                }
+
                 ScrollView(.horizontal) {
                     HStack(spacing: 20) {
                         ForEach(properties) { item in
@@ -57,26 +65,19 @@ struct AddProperty: View {
                             .border(Color.white, width: 2)
                         }.background(Color("cardColor"))
                     }
-                }
+                }.frame(maxWidth: .infinity, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding()
                 Spacer()
-                
-                InputfieldView(inputText: $propertyName, imageName: "house", placeholderText: "Add property name", keyboardType: .default)
-                    .padding(.top, 30)
-                    .padding(.horizontal)
-                    .onChange(of: propertyName, perform: { value in
-                        if !value.isEmpty {
-                            isError = false
-                        }
-                    })
-                
-                if isError {
-                    Text("You have to add a property name")
-                }
-
-                ButtonView(text: "Add Property", imageName: "plus", action: { saveProperty()}, isDisabled: propertyName.isEmpty)
-
+                ButtonView(text: "Sign out", action: { signOut()})
             }
+            .navigationBarItems(
+                trailing:
+                    Button(action: {isAddPropertyMode.toggle()}) {
+                        ZStack {
+                            Image(systemName: "plus").font(.title3)
+                        }.frame(width: 50, height: 50)
+                    }
+            )
             .padding(.bottom, 30)
             
             .onAppear() {
@@ -84,8 +85,47 @@ struct AddProperty: View {
                 getProperties()
 
             }
+//            .fullScreenCover(isPresented: $isSignedOut, content: {
+//                LoginView()
+//            })
+            .sheet(isPresented: $isAddPropertyMode, content: {
+                ZStack {
+                    Color("backgroundColor")
+                    VStack {
+                        HStack {
+                            Button(action: {isAddPropertyMode.toggle()}) {
+                                Text("Cancel")
+                            }
+                            Spacer()
+                            Text("New Property").font(.body).fontWeight(.semibold)
+                            Spacer()
+                            Button(action: saveProperty) {
+                                Text("Done")
+                            }.disabled(propertyName.isEmpty)
+
+                        }.padding()
+
+                        Spacer()
+                        InputfieldView(inputText: $propertyName, imageName: "house", placeholderText: "Add property name", keyboardType: .default)
+                            .padding(.top, 30)
+                            .padding(.horizontal)
+                        Spacer()
+                    }
+                }
+
+
+            })
         }
         
+    }
+    func signOut()  {
+        let firebaseAuth = Auth.auth()
+        do {
+            try firebaseAuth.signOut()
+            isSignedOut = true
+        } catch let signOutError as NSError {
+            print ("Error signing out: %@", signOutError)
+        }
     }
     
     
@@ -116,6 +156,7 @@ struct AddProperty: View {
         }
         getProperties()
         propertyName = ""
+        isAddPropertyMode = false
         isError = false
     }
     
