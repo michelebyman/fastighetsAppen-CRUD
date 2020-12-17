@@ -18,6 +18,7 @@ struct SignUpView: View {
     @State var isError = false
     @State var name = ""
     @State var showPassword = false
+    @Binding var isSignUpSheet: Bool
 
 
     var body: some View {
@@ -31,15 +32,13 @@ struct SignUpView: View {
                                 .resizable()
                                 .padding(.top, -150)
                         }
-                        .frame(height: 250)
+                        .frame(height: 300)
                         .padding(.bottom, 20)
 
-                    InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
-                    InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
-                    PasswordTextfieldView(password: $password, showPassword: $showPassword)
+
                     
-                    if isErrorSigningIn {Text("\(errorMessage)")}
-                    ButtonView(text: "Sign up", backgroundColor: Color("buttonColor"), action: {signUp()}, isDisabled: name.isEmpty || email.isEmpty || password.isEmpty, foregroundColor: Color(.white))
+
+                    ButtonView(text: "Sign Up", backgroundColor: Color("buttonColor"), action: {isSignUpSheet = true}, foregroundColor: Color(.white))
                     Spacer()
                 }.fullScreenCover(isPresented: $isLoggedIn, content: {
                     PropertyOwnerHomeView()
@@ -48,14 +47,41 @@ struct SignUpView: View {
 
             }
 
-        }
+        }.sheet(isPresented: $isSignUpSheet, content: {
+            ZStack {
+                Color("backgroundColor")
+                VStack {
+                    HStack {
+                        Button(action: {isSignUpSheet.toggle()}) {
+                            Text("Cancel")
+                        }
+                        Spacer()
+                        Text("Sign Up").font(.body).fontWeight(.semibold)
+                        Spacer()
+                        Button(action: savePropertyOwner) {
+                            Text("Sign Up")
+                        }.disabled(name.isEmpty || email.isEmpty || password.isEmpty)
+
+                    }.padding()
+
+                    Spacer()
+                    InputfieldView(inputText: $name, imageName: "person", placeholderText: "Name", keyboardType: .default)
+                    InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
+                    PasswordTextfieldView(password: $password, showPassword: $showPassword)
+                    if isErrorSigningIn {Text("\(errorMessage)")}
+
+
+                    Spacer()
+                }
+            }
+        })
         
     }
     
     func savePropertyOwner() {
         if name == "" { return }
         let newUser = PropertyOwner(name: name)
-        newUser.savePropertyOwner()
+        //newUser.savePropertyOwner()
     }
     
     func signUp() {
@@ -79,7 +105,7 @@ struct SignUpView: View {
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpView()
+        SignUpView( isSignUpSheet: .constant(true))
     }
 }
 

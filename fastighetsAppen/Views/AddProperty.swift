@@ -16,7 +16,6 @@ struct AddProperty: View {
     @State var id = ""
     @State var isError = false
     @State var isAddPropertyMode = false
-    @State var isSignedOut = false
 
     
     var body: some View {
@@ -68,7 +67,7 @@ struct AddProperty: View {
                 }.frame(maxWidth: .infinity, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding()
                 Spacer()
-                ButtonView(text: "Sign out", action: { signOut()})
+               
             }
             .navigationBarItems(
                 trailing:
@@ -85,9 +84,6 @@ struct AddProperty: View {
                 getProperties()
 
             }
-//            .fullScreenCover(isPresented: $isSignedOut, content: {
-//                LoginView()
-//            })
             .sheet(isPresented: $isAddPropertyMode, content: {
                 ZStack {
                     Color("backgroundColor")
@@ -118,16 +114,7 @@ struct AddProperty: View {
         }
         
     }
-    func signOut()  {
-        let firebaseAuth = Auth.auth()
-        do {
-            try firebaseAuth.signOut()
-            isSignedOut = true
-        } catch let signOutError as NSError {
-            print ("Error signing out: %@", signOutError)
-        }
-    }
-    
+
     
     func getPropertyName() {
         var ref: DatabaseReference!

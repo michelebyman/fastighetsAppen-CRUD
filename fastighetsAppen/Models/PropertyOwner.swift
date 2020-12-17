@@ -16,7 +16,7 @@ struct PropertyOwner: Identifiable {
     var ownerId = ""
     var name = ""
     
-    func savePropertyOwner() {
+    func savePropertyOwner(completion : @escaping () -> Void) {
         var ref: DatabaseReference!
         ref = Database.database().reference()
         let currentUser = Auth.auth().currentUser
@@ -30,6 +30,9 @@ struct PropertyOwner: Identifiable {
             } else {
                 print("Data saved successfully! \(String(describing: ref.key))")
             }
+
+            completion()
+
           }
     }
     
