@@ -15,6 +15,8 @@ struct LoginView: View {
     @State var errorMessage = ""
     @State var isLoggedIn = false
     @State var showPassword = false
+    @State var emailToReset = ""
+    @State var resetEmail = false
     
     
     var body: some View {
@@ -29,33 +31,36 @@ struct LoginView: View {
                             .resizable()
                             .padding(.top, -150)
                     }
-                    .frame(height: 300)
+                    .frame(height: 200)
                     .padding(.bottom, 20)
                     VStack {
-
                         InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
-
+                        if !resetEmail {
                         PasswordTextfieldView(password: $password, showPassword: $showPassword)
-
                         if isError { Text("\(errorMessage)").padding() }
-
                         ButtonView(text: "Login", backgroundColor: Color("buttonColor"), action: {signIn()}, isDisabled: email.isEmpty || password.isEmpty)
-
                         HStack {
                             Text("New here?").foregroundColor(.white).opacity(0.6).font(.callout)
                             NavigationLink(destination: SignUpView()) {
                                 Text("Create an account").font(.callout).foregroundColor(.white)
                             }
                         }
+                        } else {
+                            ButtonView(text: "Reset password", backgroundColor: Color("buttonColor"), action: {
+                                Auth.auth().sendPasswordReset(withEmail: email) { error in                             print(error?.localizedDescription)                         }
+                            }, isDisabled: email.isEmpty)
+                        }
+                        Button(action: {
+                            resetEmail.toggle()
+                        }) {
+                            Text(resetEmail ? "Go to login" : "Reset password" ).foregroundColor(.gray).font(.caption)
+                        }.padding(.top, 10)
 
-                        .padding(.bottom, 50)
                     }
                     .fullScreenCover(isPresented: $isLoggedIn, content: {
                         PropertyOwnerHomeView()
                     })
-                    
                 }
-                
             }
             .onAppear() {
                 isError = false

@@ -35,50 +35,53 @@ struct AddTenants: View {
                 .ignoresSafeArea(.all)
             ScrollView {
                 VStack {
-                    ScrollView(.horizontal) {
-                        HStack {
-                            ForEach(tenants) { tenant in
-                                NavigationLink(destination: TenantDetailView(tenant: TenantModel(id: tenant.id, name: tenant.name, lastname: tenant.lastname, email: tenant.email, phone: tenant.phone), propertyID: id)) {
-                                    VStack {
-                                        Image(systemName: "person.fill")
-                                            .resizable().frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                                            .foregroundColor(Color(.white))
-                                        
-                                        HStack {
-                                            Text("\(tenant.name) \(tenant.lastname)")
-                                                .font(.callout)
-                                        }.padding(.top,5)
-                                        Text(tenant.email)
-                                            .font(.callout)
-                                            .foregroundColor(Color(.white))
-                                            .padding(.top,5)
-                                        Text(tenant.phone)
-                                            .font(.callout)
-                                            .foregroundColor(Color(.white))
-                                            .padding(.top,5)
-                                            .padding(.bottom,5)
-
-                                        
-                                    }
-                                }
-                                .frame(maxWidth: .infinity, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-
-                                .padding()
-                                .border(Color.white, width: 2)
-
-
-                            }.background(Color("cardColor"))
-                        }
-                    }
-                    .padding()
-                    if (tenants.count > 0) {
-                        ButtonView(text:  (tenants.count > 1) ? "Send group SMS" : "Send SMS", imageName: "message", backgroundColor:  Color("secondaryButton"), action: {sendMessage()}, foregroundColor: Color("secondaryButtonText"))
-                    }
-                    
                     Text("Add tenants for \(propertyName) ")
                         .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
                         .foregroundColor(Color(.white))
                         .padding()
+                    if (!isAddTenentMode) {
+                        ScrollView(.horizontal) {
+                            HStack {
+                                ForEach(tenants) { tenant in
+                                    NavigationLink(destination: TenantDetailView(tenant: TenantModel(id: tenant.id, name: tenant.name, lastname: tenant.lastname, email: tenant.email, phone: tenant.phone), propertyID: id)) {
+                                        VStack {
+                                            Image(systemName: "person.fill")
+                                                .resizable().frame(width: 30, height: 30, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                                .foregroundColor(Color(.white))
+
+                                            HStack {
+                                                Text("\(tenant.name) \(tenant.lastname)")
+                                                    .font(.callout)
+                                            }.padding(.top,5)
+                                            Text(tenant.email)
+                                                .font(.callout)
+                                                .foregroundColor(Color(.white))
+                                                .padding(.top,5)
+                                            Text(tenant.phone)
+                                                .font(.callout)
+                                                .foregroundColor(Color(.white))
+                                                .padding(.top,5)
+                                                .padding(.bottom,5)
+
+
+                                        }
+                                    }
+                                    .frame(maxWidth: .infinity, idealHeight: /*@START_MENU_TOKEN@*/100/*@END_MENU_TOKEN@*/, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+
+                                    .padding()
+                                    .border(Color.white, width: 2)
+
+
+                                }.background(Color("cardColor"))
+                            }
+                        }
+                        .padding()
+                    }
+                    if (tenants.count > 0 && !isAddTenentMode) {
+                        ButtonView(text:  (tenants.count > 1) ? "Send group SMS" : "Send SMS", imageName: "message", backgroundColor:  Color("secondaryButton"), action: {sendMessage()}, foregroundColor: Color("secondaryButtonText"))
+                    }
+                    
+
 
                     if (tenants.count == 0 || isAddTenentMode) {
 
@@ -87,25 +90,44 @@ struct AddTenants: View {
                         InputfieldView(inputText: $email, imageName: "envelope", placeholderText: "Email", keyboardType: .emailAddress)
                         InputfieldView(inputText: $phone, imageName: "phone", placeholderText: "Phone", keyboardType: .numberPad)
 
-                        ButtonView(text: "Add tenant", action: {addTenants()}, isDisabled: name.isEmpty || lastname.isEmpty || phone.isEmpty)
-
                     } else {
-                        ButtonView(text: "Add", action: {isAddTenentMode.toggle()})
+                        ButtonView(text: "Delete property", imageName:"minus.circle", backgroundColor: Color(.red), action: {self.showingAlert = true}) .alert(isPresented:$showingAlert) {
+                            Alert(title: Text("Are you sure you want to delete this property and all tenants?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
+                                deleteProperty()
+                            }, secondaryButton: .cancel())
+                        }
+                        //                                                Button(action: {
+                        //                                                    self.showingAlert = true
+                        //                                                }) {
+                        //                                                    Text("Delete property").foregroundColor(.red)
+                        //                                                }
+                        //                                                .alert(isPresented:$showingAlert) {
+                        //                                                    Alert(title: Text("Are you sure you want to delete this property and all tenants?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
+                        //                                                        deleteProperty()
+                        //                                                    }, secondaryButton: .cancel())
+                        //                                                }
                     }
 
                 }.padding()
                 .navigationBarItems(
                     trailing:
-                        Button(action: {
-                            self.showingAlert = true
-                        }) {
-                            Text("Delete property").foregroundColor(.red)
+
+                        HStack {
+                            if (tenants.count == 0 || isAddTenentMode) {
+                                Button(action: addTenants) {
+                                    Text("Done")
+                                }.disabled(name.isEmpty || lastname.isEmpty || phone.isEmpty)
+
+                            } else {
+                                Button(action: {isAddTenentMode.toggle()}) {
+                                    Image(systemName: "person.badge.plus")
+                                }
+                            }
+
                         }
-                        .alert(isPresented:$showingAlert) {
-                            Alert(title: Text("Are you sure you want to delete this property and all tenants?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
-                                deleteProperty()
-                            }, secondaryButton: .cancel())
-                        }
+
+
+
                 )
                 .padding(.bottom, 30)
             }
@@ -142,6 +164,7 @@ struct AddTenants: View {
         phone = ""
         lastname = ""
         email = ""
+        isAddTenentMode = false
         getTenants()
         
     }

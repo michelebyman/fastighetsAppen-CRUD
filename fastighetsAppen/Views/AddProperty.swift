@@ -74,7 +74,7 @@ struct AddProperty: View {
                     Text("You have to add a property name")
                 }
 
-                ButtonView(text: "Add Property", action: { saveProperty()}, isDisabled: propertyName.isEmpty)
+                ButtonView(text: "Add Property", imageName: "plus", action: { saveProperty()}, isDisabled: propertyName.isEmpty)
 
             }
             .padding(.bottom, 30)
