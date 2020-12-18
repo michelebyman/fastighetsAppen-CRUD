@@ -204,7 +204,6 @@ struct LoginView: View {
                 isLoggedIn = true
                 isLoginSheet = false
                 resetTexfields()
-                //presentationMode.wrappedValue.dismiss()
                 startCheckLogin()
             } else {
                 errorMessage = loginError?.localizedDescription ?? ""

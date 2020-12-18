@@ -13,5 +13,6 @@ struct PropertyModel: Identifiable {
     var id : String
     var propertyName: String
     var tentansCounter: String?
-    
+    //    var apartments: String?
+    //    var parkingSpots: String?
 }
