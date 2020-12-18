@@ -63,8 +63,8 @@ struct AddProperty: View {
                             .padding()
                             .border(Color.white, width: 2)
                         }.background(Color("cardColor"))
-                    }.frame(minWidth: 200,maxWidth: .infinity,maxHeight: 350, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
-                }
+                    }.frame(maxWidth: .infinity, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                }.frame(maxWidth: .infinity, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                 .padding()
                 Spacer()
                

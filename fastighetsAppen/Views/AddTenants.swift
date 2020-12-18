@@ -80,7 +80,7 @@ struct AddTenants: View {
                         ButtonView(text:  (tenants.count > 1) ? "Send group SMS" : "Send SMS", imageName: "message", backgroundColor:  Color("secondaryButton"), action: {sendMessage()}, foregroundColor: Color("secondaryButtonText"))
 
                     }
-                    ButtonView(text: "Delete property", imageName:"minus.circle", backgroundColor: Color(.red), action: {self.showingAlert = true}) .alert(isPresented:$showingAlert) {
+                    ButtonView(text: "Delete property", imageName:"minus.circle", backgroundColor: Color("deleteColor"), action: {self.showingAlert = true}) .alert(isPresented:$showingAlert) {
                         Alert(title: Text("Are you sure you want to delete this property and all tenants?"), message: Text("There is no undo"), primaryButton: .destructive(Text("Delete")) {
                             deleteProperty()
                         }, secondaryButton: .cancel())
