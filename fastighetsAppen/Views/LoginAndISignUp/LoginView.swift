@@ -79,7 +79,7 @@ struct LoginView: View {
                 }
                 .sheet(isPresented: $resetEmail, content: {
                     ZStack {
-                        Color("backgroundColor")
+                        Color("backgroundColor").edgesIgnoringSafeArea(.all)
                         VStack {
                             HStack {
                                 Button(action: {resetEmail.toggle()}) {
@@ -114,7 +114,7 @@ struct LoginView: View {
             }
         }.sheet(isPresented: createAccount ? $isCreateAccountSheet  : $isLoginSheet, content: {
             ZStack {
-                Color("backgroundColor")
+                Color("backgroundColor").edgesIgnoringSafeArea(.all)
                 VStack {
                     HStack {
                         Button(action: createAccount ? {createAccount.toggle()} : {isLoginSheet.toggle()} ) {
@@ -174,7 +174,7 @@ struct LoginView: View {
 
     
     func signUp() {
-        Auth.auth().createUser(withEmail: email, password: password, completion: {
+        Auth.auth().createUser(withEmail: email.lowercased(), password: password, completion: {
             signUpResult, SignUpError in
             if (SignUpError == nil) {
                 savePropertyOwner()
@@ -188,7 +188,7 @@ struct LoginView: View {
     }
 
     func resetPassword() {
-        Auth.auth().sendPasswordReset(withEmail: email) { error in
+        Auth.auth().sendPasswordReset(withEmail: email.lowercased()) { error in
             resetPasswordErrorMessage =  error!.localizedDescription
             resetPasswordError = true
             resetTexfields()
@@ -198,7 +198,7 @@ struct LoginView: View {
     
     func signIn() {
 
-        Auth.auth().signIn(withEmail: email, password: password, completion: {
+        Auth.auth().signIn(withEmail: email.lowercased(), password: password, completion: {
             loginResult, loginError in
             if (loginError == nil) {
                 isLoggedIn = true

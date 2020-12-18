@@ -86,7 +86,7 @@ struct AddProperty: View {
             }
             .sheet(isPresented: $isAddPropertyMode, content: {
                 ZStack {
-                    Color("backgroundColor")
+                    Color("backgroundColor").edgesIgnoringSafeArea(.all)
                     VStack {
                         HStack {
                             Button(action: {isAddPropertyMode.toggle()}) {

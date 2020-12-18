@@ -103,7 +103,7 @@ struct AddTenants: View {
             }
             .sheet(isPresented: $isAddTenentMode, content: {
                 ZStack {
-                    Color("backgroundColor")
+                    Color("backgroundColor").edgesIgnoringSafeArea(.all)
                     VStack {
                         HStack {
                             Button(action: {isAddTenentMode.toggle()}) {

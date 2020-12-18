@@ -24,7 +24,7 @@ struct TenantModel: Identifiable {
         
         var tenantData = ["name" : tenant.name]
         tenantData["lastname"] = tenant.lastname
-        tenantData["email"] = tenant.email
+        tenantData["email"] = tenant.email.lowercased()
         tenantData["phone"] = tenant.phone
         tenantData["id"] = tenant.id
         
