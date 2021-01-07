@@ -112,7 +112,9 @@ struct LoginView: View {
                     }
                 }
             }
-        }.sheet(isPresented: createAccount ? $isCreateAccountSheet  : $isLoginSheet, content: {
+        }.sheet(isPresented: createAccount ? $isCreateAccountSheet  : $isLoginSheet, onDismiss: {
+            createAccount = false;
+        }, content: {
             ZStack {
                 Color("backgroundColor").edgesIgnoringSafeArea(.all)
                 VStack {
