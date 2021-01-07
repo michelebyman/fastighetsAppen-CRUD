@@ -67,7 +67,7 @@ struct AddTenants: View {
                                             .padding(.bottom,5)
                                     }
                                 }
-                                .frame(maxWidth: .infinity, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
+                                .frame(minWidth: 100, maxWidth: .infinity, maxHeight: 150, alignment: /*@START_MENU_TOKEN@*/.center/*@END_MENU_TOKEN@*/)
                                 .padding()
                                 .border(Color.white, width: 2)
 
